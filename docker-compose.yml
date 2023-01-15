@@ -1,0 +1,8 @@
+version: '3.5'
+services:
+  web:
+    build: .
+    container_name: onair_service
+    restart: on-failure
+    ports:
+      - "8080:8080"
