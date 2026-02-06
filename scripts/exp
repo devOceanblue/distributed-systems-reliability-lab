@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "[TODO] experiment harness will be implemented in B-0320."
