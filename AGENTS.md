@@ -40,3 +40,9 @@ Kafka × MySQL × Redis를 “올바르게/잘못 사용했을 때”의 성공/
 - [ ] 성공 케이스에서 결과가 항상 동일한가?
 - [ ] 실험이 자동 검증(assert) 가능한가?
 - [ ] Runbook에 장애 분석 포인트(로그/지표/SQL)가 있는가?
+
+## Observability/Chaos 추가 원칙
+- 모든 실험은 “메트릭으로 증명”을 목표로 한다.
+  - 실패 케이스: lag/outbox age/dlq rate/db qps/latency가 눈에 띄게 악화되어야 함
+  - 성공 케이스: 동일 부하에서 악화 폭이 유의미하게 줄어야 함
+- Chaos 스크립트(브로커 다운/지연/서비스 킬)는 `scripts/chaos/*`로 표준화한다.

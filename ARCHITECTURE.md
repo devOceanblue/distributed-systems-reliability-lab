@@ -90,3 +90,23 @@ outbox_event(id, event_id, dedup_key, event_type, payload, status, attempts, nex
 processed_event(consumer_group, dedup_key, processed_at, source_topic, partition, offset)
 
 account_projection(account_id, balance, version, updated_at) (consumer가 만드는 read model)
+
+---
+
+## 6) Observability 아키텍처
+- 모든 서비스는 Micrometer Prometheus Registry 활성화
+- Prometheus가 각 서비스 `/actuator/prometheus` 스크랩
+- Exporter:
+  - MySQL Exporter: QPS/conn/lock/slow query
+  - Redis Exporter: hit/miss/evicted/memory/latency
+  - Kafka JMX Exporter: broker/replication/ISR/under-replicated-partitions
+
+## 7) Redis Cluster Mode 실험 확장
+- Cluster mode에서는 키가 슬롯(0~16383)으로 샤딩됨
+- 멀티키 연산/Lua/트랜잭션은 “같은 슬롯” 키에서만 강하게 동작(제약 재현)
+- 해결 패턴:
+  - HashTag: `user:{123}:profile`, `user:{123}:orders` 등
+
+## 8) Tx Abort 가시성(LSO) 실험 확장
+- read_committed는 min(HW,LSO)까지 읽음
+- aborted transaction 구간은 “전달되지 않으며” consumer position이 앞으로 이동해 “건너뛴 듯” 보일 수 있음(정상 동작)
