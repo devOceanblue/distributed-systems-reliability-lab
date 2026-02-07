@@ -1,0 +1,19 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ConsumerMissingGroup",
+      "Effect": "Allow",
+      "Action": [
+        "kafka-cluster:Connect",
+        "kafka-cluster:DescribeCluster",
+        "kafka-cluster:DescribeTopic",
+        "kafka-cluster:ReadData"
+      ],
+      "Resource": [
+        "arn:aws:kafka:*:*:cluster/*",
+        "arn:aws:kafka:*:*:topic/*/*"
+      ]
+    }
+  ]
+}

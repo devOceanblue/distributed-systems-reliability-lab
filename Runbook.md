@@ -25,6 +25,11 @@
 ./scripts/verify/phase4.sh
 ```
 
+## 0-5) Phase 5 AWS/IAM 자산 검증
+```bash
+./scripts/verify/phase5.sh
+```
+
 ## 1) Local Infra 기동
 ```bash
 docker compose -f docker-compose.local.yml up -d
@@ -169,4 +174,12 @@ Partial outage degradation 비교:
 ```bash
 ./scripts/exp run E-023
 ./scripts/exp assert E-023
+```
+
+## 10) AWS 프로파일 스모크
+```bash
+make up-aws
+LAB_PROFILE=aws KAFKA_BOOTSTRAP_SERVERS='b-1.dev:9098,b-2.dev:9098,b-3.dev:9098' ./scripts/smoke/aws-kafka-produce.sh
+./scripts/smoke/aws-kafka-consume.sh
+make down-aws
 ```

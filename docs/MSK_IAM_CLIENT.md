@@ -1,0 +1,18 @@
+# MSK IAM Client
+
+## Java (Spring)
+- `security.protocol=SASL_SSL`
+- `sasl.mechanism=AWS_MSK_IAM`
+- `sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;`
+- `sasl.client.callback.handler.class=software.amazon.msk.auth.iam.IAMClientCallbackHandler`
+
+## Python
+- `security_protocol=SASL_SSL`
+- `sasl_mechanism=OAUTHBEARER`
+- token provider: `aws_msk_iam_sasl_signer`
+
+## Smoke
+```bash
+LAB_PROFILE=aws KAFKA_BOOTSTRAP_SERVERS='b-1:9098,b-2:9098,b-3:9098' ./scripts/smoke/aws-kafka-produce.sh
+./scripts/smoke/aws-kafka-consume.sh
+```

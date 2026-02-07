@@ -22,15 +22,8 @@
 ## Phase 4 — Advanced Experiments
 - `B-0333` ~ `B-0346`: `DONE`
 
-## Phase 5 — Placeholder Tickets
-아래 티켓은 현재 빈 파일 placeholder입니다.
-- `B-0350`
-- `B-0351`
-- `B-0352`
-- `B-0353`
-- `B-0354`
-- `B-0355`
-- `B-0356`
+## Phase 5 — AWS/IAM/Runtime Profiles
+- `B-0350` ~ `B-0356`: `DONE`
 
 ## Experiment Map
 - `E-001` `B-0321`: baseline success

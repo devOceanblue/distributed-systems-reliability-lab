@@ -1,0 +1,10 @@
+{
+  "title": "AWS Reliability Overview",
+  "schemaVersion": 39,
+  "version": 1,
+  "panels": [
+    {"type": "timeseries", "title": "Consumer Lag", "targets": [{"expr": "consumer_lag_records"}]},
+    {"type": "timeseries", "title": "Outbox Oldest Age", "targets": [{"expr": "outbox_oldest_age_seconds"}]},
+    {"type": "timeseries", "title": "DLQ Rate", "targets": [{"expr": "rate(dlq_publish_total[1m])"}]}
+  ]
+}

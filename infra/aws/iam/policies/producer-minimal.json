@@ -1,0 +1,19 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ProducerMinimal",
+      "Effect": "Allow",
+      "Action": [
+        "kafka-cluster:Connect",
+        "kafka-cluster:DescribeCluster",
+        "kafka-cluster:DescribeTopic",
+        "kafka-cluster:WriteData"
+      ],
+      "Resource": [
+        "arn:aws:kafka:*:*:cluster/*",
+        "arn:aws:kafka:*:*:topic/*/*"
+      ]
+    }
+  ]
+}

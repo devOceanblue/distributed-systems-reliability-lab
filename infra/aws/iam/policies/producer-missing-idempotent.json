@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ProducerMissingIdempotent",
+      "Effect": "Allow",
+      "Action": [
+        "kafka-cluster:Connect",
+        "kafka-cluster:DescribeCluster",
+        "kafka-cluster:WriteData"
+      ],
+      "Resource": [
+        "arn:aws:kafka:*:*:cluster/*",
+        "arn:aws:kafka:*:*:topic/*/*"
+      ]
+    }
+  ]
+}

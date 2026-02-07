@@ -35,6 +35,9 @@ E-018  consumer rebalance storm
 E-019  mysql deadlock classification and retry
 E-022  controlled backfill vs unsafe backfill
 E-023  partial outage degradation
+E-IAM-001  msk iam missing group permission
+E-IAM-002  msk iam topic write denied
+E-IAM-003  msk iam idempotent permission missing
 LIST
 }
 

@@ -1,0 +1,21 @@
+SHELL := /bin/bash
+
+up-local:
+	docker compose -f docker-compose.local.yml up -d
+
+down-local:
+	docker compose -f docker-compose.local.yml down
+
+up-aws:
+	LAB_PROFILE=aws docker compose -f docker-compose.local.yml -f docker-compose.aws.override.yml up -d app-placeholder
+
+down-aws:
+	LAB_PROFILE=aws docker compose -f docker-compose.local.yml -f docker-compose.aws.override.yml down
+
+verify-phases:
+	./scripts/verify/phase0.sh
+	./scripts/verify/phase1.sh
+	./scripts/verify/phase2.sh
+	./scripts/verify/phase3.sh
+	./scripts/verify/phase4.sh
+	./scripts/verify/phase5.sh
