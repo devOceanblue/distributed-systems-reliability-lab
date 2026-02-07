@@ -16,6 +16,8 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - `B-0327` 런타임 acceptance: local-only 트랜잭션 가시성에서 LEO/HW/LSO + read_committed 정체/해소 재현
 - `B-0328` 런타임 acceptance: E-008 stampede failure/success DB read/qps/p95/p99 비교 검증
 - `B-0329` 런타임 acceptance: E-009 ISR/minISR/acks 조합에서 produce 성공/실패/내구성 리스크 검증
+- `B-0330` 런타임 acceptance: compose obs profile + actuator/prometheus + micrometer registry 연결 검증
+- `B-0331` 런타임 acceptance: lag/outbox/dlq/cache/db/urp 경보식과 대시보드 패널 검증
 - `B-0320`~`B-0329`: `scripts/exp` 하네스 + E-001~E-009 run/assert/cleanup 구현
 - `B-0330`~`B-0332`: Prometheus/Grafana/alerts + `scripts/chaos/*` 구현
 - `B-0333`~`B-0346`: E-010~E-023 고급 실험 문서/시나리오/assert 구현
@@ -23,7 +25,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 
 재오픈 상태:
 - 진행중(`tasks/doing`): 없음
-- 대기(`tasks/backlog`): `B-0330`, `B-0331`, `B-0333`~`B-0346`, `B-0350`~`B-0356`
+- 대기(`tasks/backlog`): `B-0333`~`B-0346`, `B-0350`~`B-0356`
 
 주의:
 - 일부 실험/티켓은 deterministic 시뮬레이션으로 acceptance를 대체하고 있으므로, 운영 수준 acceptance를 위해 재오픈된 티켓을 우선순위대로 치환 중입니다.
@@ -64,6 +66,8 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 ./scripts/verify/B-0327.sh
 ./scripts/verify/B-0328.sh
 ./scripts/verify/B-0329.sh
+./scripts/verify/B-0330.sh
+./scripts/verify/B-0331.sh
 ./gradlew :libs:event-core:test
 ./scripts/verify/phase1-runtime.sh
 ./scripts/verify/phase1.sh

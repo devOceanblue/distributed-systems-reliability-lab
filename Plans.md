@@ -24,7 +24,8 @@
 - `B-0329`: `DONE`
 
 ## Phase 3 — Observability + Chaos
-- `B-0330` ~ `B-0331`: `TODO`
+- `B-0330`: `DONE`
+- `B-0331`: `DONE`
 - `B-0332`: `DONE`
 
 ## Phase 4 — Advanced Experiments
@@ -43,7 +44,7 @@ Priority 2 (core experiments completeness)
 - `(완료)`
 
 Priority 3 (observability/advanced runtime)
-- `B-0330`, `B-0331`, `B-0333`, `B-0334`, `B-0335`, `B-0336`, `B-0337`, `B-0338`, `B-0341`, `B-0342`, `B-0345`, `B-0346`
+- `B-0333`, `B-0334`, `B-0335`, `B-0336`, `B-0337`, `B-0338`, `B-0341`, `B-0342`, `B-0345`, `B-0346`
 
 Priority 4 (aws production completeness)
 - `B-0350`, `B-0351`, `B-0352`, `B-0353`, `B-0354`, `B-0355`, `B-0356`

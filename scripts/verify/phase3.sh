@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+"$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/B-0330.sh" >/dev/null
+"$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/B-0331.sh" >/dev/null
+
 required_files=(
   infra/prometheus/prometheus.yml
   infra/prometheus/alerts.yml

@@ -13,6 +13,7 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.flywaydb:flyway-core'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

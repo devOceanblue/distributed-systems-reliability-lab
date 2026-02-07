@@ -33,6 +33,8 @@ LAB_PROFILE=local ./scripts/exp run E-007 && ./scripts/exp assert E-007
 
 ## 0-3) Phase 3 관측/chaos 자산 검증
 ```bash
+./scripts/verify/B-0330.sh
+./scripts/verify/B-0331.sh
 ./scripts/verify/phase3.sh
 ```
 
