@@ -2,11 +2,12 @@
 Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재현 가능한 실험으로 검증하는 레포입니다.
 
 ## Current Status
-이 저장소는 현재 Phase 0 부트스트랩 단계입니다.
+이 저장소는 현재 Phase 1(코어 파이프라인)까지 구현된 상태입니다.
 
 - `B-0301`: 기본 문서/폴더 스캐폴드 완료
 - `B-0302`: `docker-compose.local.yml`, `docker-compose.aws.override.yml`, `infra/*` 작성 완료
 - `B-0303`: Avro 계약 파일 + `libs/event-core` 스캐폴드 완료 + 검증 스크립트 추가
+- `B-0310`~`B-0315`: core schema/command/relay/consumer/query/replay 시뮬레이터 구현
 
 주의:
 - `B-0302`, `B-0303`의 런타임 acceptance(실제 송수신, registry 등록 성공, 헬스체크)는 환경에서 별도 실행 검증이 필요합니다.
@@ -39,6 +40,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 
 ```bash
 ./scripts/verify/phase0.sh
+./scripts/verify/phase1.sh
 ```
 
 인프라 검증(`B-0302`)용 명령:

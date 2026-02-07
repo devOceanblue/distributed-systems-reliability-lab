@@ -11,7 +11,7 @@
 - `B-0303` Event envelope + Avro + event-core 스캐폴드: `DONE`
 
 ## Phase 1 — Core Pipeline
-- `B-0310` ~ `B-0315`: `TODO`
+- `B-0310` ~ `B-0315`: `DONE`
 
 ## Phase 2 — Harness + Core Experiments
 - `B-0320` ~ `B-0329`: `TODO`

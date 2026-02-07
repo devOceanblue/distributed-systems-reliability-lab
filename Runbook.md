@@ -5,6 +5,11 @@
 ./scripts/verify/phase0.sh
 ```
 
+## 0-1) Phase 1 코어 파이프라인 검증
+```bash
+./scripts/verify/phase1.sh
+```
+
 ## 1) Local Infra 기동
 ```bash
 docker compose -f docker-compose.local.yml up -d
@@ -54,6 +59,16 @@ redis-cli -h 127.0.0.1 -p 16379 ping
 ## 4) 현재 실험 실행 상태
 - `scripts/exp`는 아직 placeholder입니다.
 - 실험 `run/assert/cleanup` 표준은 `B-0320`에서 구현됩니다.
+
+코어 파이프라인 단일 명령 예시:
+```bash
+./scripts/sim/lab_sim.sh reset
+./scripts/sim/lab_sim.sh seed 1
+services/command-service/bin/command-service.sh deposit A-1 tx-1 100
+services/outbox-relay/bin/outbox-relay.sh
+services/consumer-service/bin/consumer-service.sh
+services/query-service/bin/query-service.sh A-1
+```
 
 ## 5) 장애 분석 포인트(공통)
 - 중복 의심:

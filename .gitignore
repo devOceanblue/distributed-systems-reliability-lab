@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Reliability lab simulator state
+.lab/
