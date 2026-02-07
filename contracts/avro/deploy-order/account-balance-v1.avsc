@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "name": "AccountBalanceDeployOrder",
+  "namespace": "com.reliabilitylab.contracts.deployorder",
+  "fields": [
+    { "name": "account_id", "type": "string" },
+    { "name": "amount", "type": "long" },
+    { "name": "tags", "type": "string" }
+  ]
+}

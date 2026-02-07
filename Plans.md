@@ -14,7 +14,7 @@
 - `B-0310` ~ `B-0315`: `DONE`
 
 ## Phase 2 — Harness + Core Experiments
-- `B-0320` ~ `B-0329`: `TODO`
+- `B-0320` ~ `B-0329`: `DONE`
 
 ## Phase 3 — Observability + Chaos
 - `B-0330` ~ `B-0332`: `TODO`

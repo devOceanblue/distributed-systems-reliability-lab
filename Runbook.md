@@ -10,6 +10,11 @@
 ./scripts/verify/phase1.sh
 ```
 
+## 0-2) Phase 2 실험 하네스 검증
+```bash
+./scripts/verify/phase2.sh
+```
+
 ## 1) Local Infra 기동
 ```bash
 docker compose -f docker-compose.local.yml up -d
@@ -56,9 +61,19 @@ redis-cli -h 127.0.0.1 -p 16379 ping
 - `account.balance.retry.1m`
 - `account.balance.dlq`
 
-## 4) 현재 실험 실행 상태
-- `scripts/exp`는 아직 placeholder입니다.
-- 실험 `run/assert/cleanup` 표준은 `B-0320`에서 구현됩니다.
+## 4) 실험 하네스 실행
+
+실험 목록:
+```bash
+./scripts/exp list
+```
+
+실행/검증/정리:
+```bash
+./scripts/exp run E-001
+./scripts/exp assert E-001
+./scripts/exp cleanup E-001
+```
 
 코어 파이프라인 단일 명령 예시:
 ```bash

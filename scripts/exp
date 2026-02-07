@@ -1,4 +1,76 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "[TODO] experiment harness will be implemented in B-0320."
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SIM="$ROOT_DIR/scripts/sim/lab_sim.sh"
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  ./scripts/exp list
+  ./scripts/exp run E-001
+  ./scripts/exp assert E-001
+  ./scripts/exp cleanup E-001
+USAGE
+}
+
+list_experiments() {
+  cat <<'LIST'
+E-001  Outbox + Relay + processed_event success
+E-002  direct-produce loss after DB commit
+E-003  duplicate side-effect without processed_event
+E-004  at-most-once loss via offset-first commit
+E-005  retry -> DLQ -> replay recovery
+E-006  schema/deploy order simulation
+E-007  LSO read_committed visibility simulation
+E-008  cache stampede simulation
+E-009  ISR/minISR/acks matrix simulation
+LIST
+}
+
+run_experiment() {
+  local id="$1"
+  local script="$ROOT_DIR/scripts/scenarios/${id}.sh"
+  [[ -x "$script" ]] || { echo "missing run script: $script" >&2; return 2; }
+  "$script"
+}
+
+assert_experiment() {
+  local id="$1"
+  local script="$ROOT_DIR/scripts/assert/${id}.sh"
+  [[ -x "$script" ]] || { echo "missing assert script: $script" >&2; return 2; }
+  "$script"
+}
+
+cleanup_experiment() {
+  "$SIM" reset
+  echo "[OK] cleaned"
+}
+
+main() {
+  local cmd="${1:-}"
+  local exp_id="${2:-}"
+
+  case "$cmd" in
+    list)
+      list_experiments
+      ;;
+    run)
+      [[ -n "$exp_id" ]] || { usage; exit 2; }
+      run_experiment "$exp_id"
+      ;;
+    assert)
+      [[ -n "$exp_id" ]] || { usage; exit 2; }
+      assert_experiment "$exp_id"
+      ;;
+    cleanup)
+      cleanup_experiment
+      ;;
+    *)
+      usage
+      exit 2
+      ;;
+  esac
+}
+
+main "$@"

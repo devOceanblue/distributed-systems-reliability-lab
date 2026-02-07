@@ -17,6 +17,7 @@ processed_file="$STATE_DIR/processed.tsv"
 replay_audit_file="$STATE_DIR/replay_audit.tsv"
 cache_file="$STATE_DIR/cache.tsv"
 offset_file="$STATE_DIR/consumer.offset"
+metrics_file="$STATE_DIR/metrics.env"
 
 init_state() {
   mkdir -p "$STATE_DIR"
@@ -33,6 +34,11 @@ init_state() {
   : > "$cache_file"
   echo "1" > "$outbox_seq_file"
   echo "0" > "$offset_file"
+  cat > "$metrics_file" <<'METRICS'
+CACHE_HIT=0
+CACHE_MISS=0
+DB_READ=0
+METRICS
 }
 
 ensure_account() {
@@ -214,6 +220,19 @@ advance_offset() {
   echo $((current + 1)) > "$offset_file"
 }
 
+read_metric() {
+  local key="$1"
+  awk -F '=' -v target="$key" '$1 == target {print $2}' "$metrics_file" | tail -n 1
+}
+
+inc_metric() {
+  local key="$1"
+  local current
+  current=$(read_metric "$key")
+  awk -F '=' -v target="$key" -v next_value="$((current + 1))" 'BEGIN{OFS="="} $1 == target {$2=next_value} {print}' "$metrics_file" > "$metrics_file.tmp"
+  mv "$metrics_file.tmp" "$metrics_file"
+}
+
 consumer_once() {
   local consumer_group="${1:-consumer-service}"
   local idempotency_mode="${2:-processed_table}"
@@ -293,11 +312,14 @@ query_balance() {
     local value expires_at
     IFS=$'\t' read -r value expires_at <<< "$cached"
     if (( now <= expires_at )); then
+      inc_metric "CACHE_HIT"
       echo "$value"
       return 0
     fi
   fi
 
+  inc_metric "CACHE_MISS"
+  inc_metric "DB_READ"
   local projection
   projection=$(get_projection "$account_id")
   local balance version
@@ -332,16 +354,52 @@ replay_dlq() {
 
 count_rows() {
   local target="$1"
+  local offset
   case "$target" in
     accounts) wc -l < "$accounts_file" | tr -d ' ' ;;
     ledger) wc -l < "$ledger_file" | tr -d ' ' ;;
     outbox) wc -l < "$outbox_file" | tr -d ' ' ;;
+    outbox_pending) awk -F '\t' '$6 != "SENT" {c++} END{print c+0}' "$outbox_file" ;;
     main_topic) wc -l < "$main_topic_file" | tr -d ' ' ;;
+    main_unconsumed)
+      offset=$(cat "$offset_file")
+      local total
+      total=$(wc -l < "$main_topic_file" | tr -d ' ')
+      if (( total < offset )); then
+        echo "0"
+      else
+        echo $((total - offset))
+      fi
+      ;;
     projection) wc -l < "$projection_file" | tr -d ' ' ;;
     processed) wc -l < "$processed_file" | tr -d ' ' ;;
     dlq) wc -l < "$dlq_file" | tr -d ' ' ;;
     replay_audit) wc -l < "$replay_audit_file" | tr -d ' ' ;;
+    offset) cat "$offset_file" ;;
+    cache_hit) read_metric "CACHE_HIT" ;;
+    cache_miss) read_metric "CACHE_MISS" ;;
+    db_read) read_metric "DB_READ" ;;
     *) echo "unknown table: $target" >&2; return 2 ;;
+  esac
+}
+
+inspect_value() {
+  local target="$1"
+  local account_id="${2:-}"
+  case "$target" in
+    domain_balance)
+      get_account_balance "$account_id"
+      ;;
+    projection_balance)
+      awk -F '\t' -v account="$account_id" '$1 == account {print $2}' "$projection_file" | tail -n 1
+      ;;
+    outbox_statuses)
+      awk -F '\t' '{print $1 ":" $6}' "$outbox_file"
+      ;;
+    *)
+      echo "unknown inspect target: $target" >&2
+      return 2
+      ;;
   esac
 }
 
@@ -364,7 +422,8 @@ Usage:
   lab_sim.sh consume-once [consumer_group] [processed_table|none] [after_db|before_db] [fail_after_offset_before_db] [force_permanent_account] [cache_invalidation_mode]
   lab_sim.sh query <account_id> [ttl_seconds] [cache_mode]
   lab_sim.sh replay-dlq [account_filter|*] [dry_run]
-  lab_sim.sh count <accounts|ledger|outbox|main_topic|projection|processed|dlq|replay_audit>
+  lab_sim.sh count <accounts|ledger|outbox|outbox_pending|main_topic|main_unconsumed|projection|processed|dlq|replay_audit|offset|cache_hit|cache_miss|db_read>
+  lab_sim.sh inspect <domain_balance|projection_balance|outbox_statuses> [account_id]
 USAGE
 }
 
@@ -397,6 +456,9 @@ main() {
       ;;
     count)
       count_rows "$2"
+      ;;
+    inspect)
+      inspect_value "$2" "${3:-}"
       ;;
     *)
       usage
