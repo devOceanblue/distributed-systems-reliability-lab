@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "AccountBalanceChangedV1",
+  "namespace": "com.reliabilitylab.contracts.schemaorder",
+  "fields": [
+    { "name": "account_id", "type": "string" },
+    { "name": "tx_id", "type": "string" },
+    { "name": "amount", "type": "long" },
+    { "name": "tags", "type": "string" }
+  ]
+}

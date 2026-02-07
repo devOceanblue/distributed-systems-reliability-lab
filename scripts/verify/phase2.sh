@@ -18,5 +18,6 @@ run_and_assert E-002 env
 run_and_assert E-003 env
 run_and_assert E-004 env
 run_and_assert E-005 env
+run_and_assert E-006 env
 
-echo "[OK] phase2 harness checks passed (E-001..E-005)"
+echo "[OK] phase2 harness checks passed (E-001..E-006)"

@@ -18,6 +18,7 @@ verify-phases:
 	./scripts/verify/B-0314.sh
 	./scripts/verify/B-0315.sh
 	./scripts/verify/B-0325.sh
+	./scripts/verify/B-0326.sh
 	./scripts/verify/phase1-runtime.sh
 	./scripts/verify/phase1.sh
 	./scripts/verify/phase2.sh

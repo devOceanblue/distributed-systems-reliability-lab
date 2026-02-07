@@ -16,6 +16,7 @@ dependencies {
     testImplementation project(':services:consumer-service')
     testImplementation project(':services:replay-worker')
 
+    testImplementation 'org.apache.kafka:kafka-clients'
     testImplementation 'org.springframework:spring-jdbc'
     testImplementation 'org.springframework:spring-tx'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind'

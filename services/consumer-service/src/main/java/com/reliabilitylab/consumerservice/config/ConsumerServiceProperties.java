@@ -7,6 +7,7 @@ public class ConsumerServiceProperties {
     private String consumerGroup = "consumer-service";
     private IdempotencyMode idempotencyMode = IdempotencyMode.PROCESSED_TABLE;
     private OffsetCommitMode offsetCommitMode = OffsetCommitMode.AFTER_DB;
+    private SchemaReadMode schemaReadMode = SchemaReadMode.DUAL_READ;
     private String forcePermanentErrorOnAccountId = "";
     private CacheInvalidationMode cacheInvalidationMode = CacheInvalidationMode.DEL;
     private final Kafka kafka = new Kafka();
@@ -34,6 +35,14 @@ public class ConsumerServiceProperties {
 
     public void setOffsetCommitMode(OffsetCommitMode offsetCommitMode) {
         this.offsetCommitMode = offsetCommitMode;
+    }
+
+    public SchemaReadMode getSchemaReadMode() {
+        return schemaReadMode;
+    }
+
+    public void setSchemaReadMode(SchemaReadMode schemaReadMode) {
+        this.schemaReadMode = schemaReadMode;
     }
 
     public String getForcePermanentErrorOnAccountId() {
@@ -68,6 +77,11 @@ public class ConsumerServiceProperties {
     public enum OffsetCommitMode {
         BEFORE_DB,
         AFTER_DB
+    }
+
+    public enum SchemaReadMode {
+        V1_STRICT,
+        DUAL_READ
     }
 
     public enum CacheInvalidationMode {

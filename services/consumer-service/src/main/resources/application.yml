@@ -36,6 +36,7 @@ app:
   consumer-group: ${CONSUMER_GROUP:consumer-service}
   idempotency-mode: ${IDEMPOTENCY_MODE:PROCESSED_TABLE}
   offset-commit-mode: ${OFFSET_COMMIT_MODE:AFTER_DB}
+  schema-read-mode: ${SCHEMA_READ_MODE:DUAL_READ}
   force-permanent-error-on-account-id: ${FORCE_PERMANENT_ERROR_ON_ACCOUNT_ID:}
   cache-invalidation-mode: ${CACHE_INVALIDATION_MODE:DEL}
   topic:

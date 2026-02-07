@@ -18,7 +18,8 @@
 ## Phase 2 — Harness + Core Experiments
 - `B-0320` ~ `B-0324`: `DONE`
 - `B-0325`: `DONE`
-- `B-0326` ~ `B-0329`: `TODO`
+- `B-0326`: `DONE`
+- `B-0327` ~ `B-0329`: `TODO`
 
 ## Phase 3 — Observability + Chaos
 - `B-0330` ~ `B-0331`: `TODO`
@@ -37,7 +38,7 @@ Priority 1 (core correctness)
 - `(완료)`
 
 Priority 2 (core experiments completeness)
-- `B-0326`, `B-0327`, `B-0328`, `B-0329`
+- `B-0327`, `B-0328`, `B-0329`
 
 Priority 3 (observability/advanced runtime)
 - `B-0330`, `B-0331`, `B-0333`, `B-0334`, `B-0335`, `B-0336`, `B-0337`, `B-0338`, `B-0341`, `B-0342`, `B-0345`, `B-0346`
