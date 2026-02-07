@@ -111,8 +111,67 @@ services:
     volumes:
       - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
 
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    profiles: ["obs"]
+    ports:
+      - "19090:9090"
+    volumes:
+      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./infra/prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana:11.2.2
+    profiles: ["obs"]
+    ports:
+      - "13000:3000"
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./infra/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./infra/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./infra/grafana/dashboards:/var/lib/grafana/dashboards:ro
+
+  mysqld-exporter:
+    image: prom/mysqld-exporter:v0.15.1
+    profiles: ["obs"]
+    depends_on:
+      - mysql
+    ports:
+      - "19104:9104"
+    environment:
+      DATA_SOURCE_NAME: root:root@(mysql:3306)/lab
+
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.63.0
+    profiles: ["obs"]
+    depends_on:
+      - redis
+    ports:
+      - "19121:9121"
+    environment:
+      REDIS_ADDR: redis://redis:6379
+
+  kafka-exporter:
+    image: danielqsj/kafka-exporter:v1.7.0
+    profiles: ["obs"]
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+    ports:
+      - "19308:9308"
+    command:
+      - --kafka.server=kafka-1:9092
+      - --kafka.server=kafka-2:9092
+      - --kafka.server=kafka-3:9092
+
 volumes:
   kafka1-data:
   kafka2-data:
   kafka3-data:
   mysql-data:
+  grafana-data:

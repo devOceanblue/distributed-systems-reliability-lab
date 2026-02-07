@@ -17,7 +17,7 @@
 - `B-0320` ~ `B-0329`: `DONE`
 
 ## Phase 3 — Observability + Chaos
-- `B-0330` ~ `B-0332`: `TODO`
+- `B-0330` ~ `B-0332`: `DONE`
 
 ## Phase 4 — Advanced Experiments
 - `B-0333` ~ `B-0346`: `TODO`

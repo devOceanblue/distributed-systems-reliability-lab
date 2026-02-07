@@ -1,0 +1,50 @@
+groups:
+  - name: reliability-lab-alerts
+    rules:
+      - alert: OutboxOldestAgeHigh
+        expr: outbox_oldest_age_seconds > 300
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Outbox oldest age is over 5 minutes"
+
+      - alert: DlqRateHigh
+        expr: rate(dlq_publish_total[1m]) > 1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "DLQ publish rate is elevated"
+
+      - alert: ConsumerLagHigh
+        expr: consumer_lag_records > 1000
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Consumer lag exceeded threshold"
+
+      - alert: RedisStampedeSignal
+        expr: (redis_hit_ratio < 0.7) and (mysql_global_status_questions > 200)
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low redis hit ratio with high DB QPS"
+
+      - alert: MysqlConnectionsHigh
+        expr: mysql_global_status_threads_connected > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "MySQL connection usage is high"
+
+      - alert: UnderReplicatedPartitionsDetected
+        expr: kafka_server_replicamanager_underreplicatedpartitions > 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Kafka has under replicated partitions"

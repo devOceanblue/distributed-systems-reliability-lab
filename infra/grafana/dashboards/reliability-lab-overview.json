@@ -1,0 +1,35 @@
+{
+  "id": null,
+  "title": "Reliability Lab Overview",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Consumer Lag",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "targets": [{"expr": "consumer_lag_records", "refId": "A"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "Outbox Oldest Age",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "targets": [{"expr": "outbox_oldest_age_seconds", "refId": "A"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "DLQ Publish Rate",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+      "targets": [{"expr": "rate(dlq_publish_total[1m])", "refId": "A"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "Cache Hit Ratio",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+      "targets": [{"expr": "redis_hit_ratio", "refId": "A"}]
+    }
+  ],
+  "templating": {"list": []},
+  "annotations": {"list": []}
+}

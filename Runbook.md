@@ -15,6 +15,11 @@
 ./scripts/verify/phase2.sh
 ```
 
+## 0-3) Phase 3 관측/chaos 자산 검증
+```bash
+./scripts/verify/phase3.sh
+```
+
 ## 1) Local Infra 기동
 ```bash
 docker compose -f docker-compose.local.yml up -d
@@ -107,4 +112,31 @@ services/query-service/bin/query-service.sh A-1
 예시:
 ```bash
 docker compose -f docker-compose.local.yml -p reliability-lab up -d
+```
+
+## 7) Observability 스택 기동
+```bash
+docker compose -f docker-compose.local.yml --profile obs up -d prometheus grafana mysqld-exporter redis-exporter kafka-exporter
+```
+
+- Prometheus: `http://localhost:19090`
+- Grafana: `http://localhost:13000` (default admin/admin)
+
+## 8) Chaos Toolkit 사용 예시
+브로커 정지/복구:
+```bash
+./scripts/chaos/broker-stop.sh 1
+./scripts/chaos/broker-start.sh 1
+```
+
+네트워크 지연 주입/해제:
+```bash
+./scripts/chaos/netem-delay.sh kafka-1 300 5
+./scripts/chaos/netem-clear.sh kafka-1
+```
+
+서비스 프로세스 강제종료/재시작:
+```bash
+./scripts/chaos/kill-service.sh consumer-service.sh
+./scripts/chaos/restart-service.sh services/consumer-service/bin/consumer-service.sh
 ```
