@@ -12,4 +12,5 @@ for _ in $(seq 1 5); do
 done
 
 env REPLAY_ACCOUNT_ID=A-3 "$REPLAY" >/dev/null
+env REPLAY_ACCOUNT_ID=A-3 "$REPLAY" >/dev/null
 run_consumer_until_idle

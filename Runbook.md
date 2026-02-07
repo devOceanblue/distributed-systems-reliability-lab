@@ -18,7 +18,9 @@
 
 ## 0-2) Phase 2 실험 하네스 검증
 ```bash
+./scripts/verify/B-0325.sh
 ./scripts/verify/phase2.sh
+./gradlew :services:e2e-tests:test --tests com.reliabilitylab.e2e.RetryDlqReplayE2ETest
 ```
 
 ## 0-3) Phase 3 관측/chaos 자산 검증

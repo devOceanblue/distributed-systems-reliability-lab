@@ -14,6 +14,7 @@ dependencies {
     testImplementation project(':services:command-service')
     testImplementation project(':services:outbox-relay')
     testImplementation project(':services:consumer-service')
+    testImplementation project(':services:replay-worker')
 
     testImplementation 'org.springframework:spring-jdbc'
     testImplementation 'org.springframework:spring-tx'
