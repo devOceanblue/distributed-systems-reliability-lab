@@ -37,13 +37,14 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - Phase 2: `B-0320` ~ `B-0329`
 - Phase 3: `B-0330` ~ `B-0332`
 - Phase 4: `B-0333` ~ `B-0346`
-- Phase 5 placeholders: `B-0350` ~ `B-0356` (현재 빈 파일)
+- Phase 5: `B-0350` ~ `B-0356`
 
 ## Commands
 현재 즉시 실행 가능한 최소 명령:
 
 ```bash
 ./scripts/verify/phase0.sh
+./scripts/verify/phase1-runtime.sh
 ./scripts/verify/phase1.sh
 ./scripts/verify/phase2.sh
 ./scripts/verify/phase3.sh
@@ -66,6 +67,12 @@ docker compose -f docker-compose.local.yml --profile obs up -d prometheus grafan
 ./scripts/exp run E-001
 ./scripts/exp assert E-001
 ./scripts/exp cleanup E-001
+```
+
+Phase 1 runtime command-service:
+
+```bash
+./gradlew :services:command-service:bootRun
 ```
 
 ## References

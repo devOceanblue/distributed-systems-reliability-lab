@@ -7,6 +7,7 @@
 
 ## 0-1) Phase 1 코어 파이프라인 검증
 ```bash
+./scripts/verify/phase1-runtime.sh
 ./scripts/verify/phase1.sh
 ```
 
@@ -182,4 +183,17 @@ make up-aws
 LAB_PROFILE=aws KAFKA_BOOTSTRAP_SERVERS='b-1.dev:9098,b-2.dev:9098,b-3.dev:9098' ./scripts/smoke/aws-kafka-produce.sh
 ./scripts/smoke/aws-kafka-consume.sh
 make down-aws
+```
+
+## 11) Phase 1 Runtime 서비스 기동
+```bash
+./gradlew :services:command-service:bootRun
+```
+
+
+샘플 요청:
+```bash
+curl -X POST 'http://localhost:8080/accounts/A-1/deposit' \
+  -H 'content-type: application/json' \
+  -d '{"txId":"tx-runtime-1","amount":100,"traceId":"trace-runtime-1"}'
 ```

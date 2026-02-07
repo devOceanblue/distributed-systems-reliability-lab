@@ -14,6 +14,7 @@ down-aws:
 
 verify-phases:
 	./scripts/verify/phase0.sh
+	./scripts/verify/phase1-runtime.sh
 	./scripts/verify/phase1.sh
 	./scripts/verify/phase2.sh
 	./scripts/verify/phase3.sh

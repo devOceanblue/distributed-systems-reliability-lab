@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: command-service
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://localhost:13306/lab}
+    username: ${MYSQL_USER:lab}
+    password: ${MYSQL_PASSWORD:lab}
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+app:
+  produce-mode: ${PRODUCE_MODE:OUTBOX}
+  kafka:
+    enabled: ${APP_KAFKA_ENABLED:false}
+  topic:
+    account-balance: ${TOPIC_ACCOUNT_BALANCE:account.balance.v1}
