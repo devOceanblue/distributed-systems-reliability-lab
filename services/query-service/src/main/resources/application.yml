@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: query-service
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://localhost:13306/lab}
+    username: ${MYSQL_USER:lab}
+    password: ${MYSQL_PASSWORD:lab}
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:16379}
+
+server:
+  port: ${SERVER_PORT:8083}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+app:
+  redis:
+    enabled: ${APP_REDIS_ENABLED:false}
+  query:
+    ttl-seconds: ${TTL_SECONDS:30}
+    ttl-jitter-seconds: ${TTL_JITTER_SECONDS:5}
+    stampede-protection: ${STAMPEDE_PROTECTION:ON}
+    cache-invalidation-mode: ${CACHE_INVALIDATION_MODE:DEL}
+    lock-ttl-millis: ${LOCK_TTL_MILLIS:3000}
+    lock-wait-millis: ${LOCK_WAIT_MILLIS:25}
+    lock-retry-count: ${LOCK_RETRY_COUNT:20}

@@ -1,12 +1,16 @@
 # query-service
 
-Deterministic query path simulator with cache-aside behavior.
+Spring Boot query runtime for cache-aside balance reads.
 
 ## Toggles
+- `APP_REDIS_ENABLED=true|false`
 - `TTL_SECONDS=30`
-- `CACHE_INVALIDATION_MODE=DEL|NONE`
+- `TTL_JITTER_SECONDS=5`
+- `STAMPEDE_PROTECTION=ON|OFF`
+- `CACHE_INVALIDATION_MODE=DEL|VERSIONED|NONE`
 
 ## Usage
 ```bash
-services/query-service/bin/query-service.sh A-1
+./gradlew :services:query-service:bootRun
+curl -s 'http://localhost:8083/accounts/A-1/balance'
 ```

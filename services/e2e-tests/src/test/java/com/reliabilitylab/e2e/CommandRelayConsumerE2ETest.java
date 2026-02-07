@@ -14,6 +14,7 @@ import com.reliabilitylab.consumerservice.app.ConsumerTxHandler;
 import com.reliabilitylab.consumerservice.app.DlqPublisher;
 import com.reliabilitylab.consumerservice.app.ProcessOutcome;
 import com.reliabilitylab.consumerservice.app.ProcessingInput;
+import com.reliabilitylab.consumerservice.app.ProjectionCacheInvalidator;
 import com.reliabilitylab.consumerservice.app.RetryPublisher;
 import com.reliabilitylab.consumerservice.config.ConsumerServiceProperties;
 import com.reliabilitylab.consumerservice.infra.ConsumerJdbcRepository;
@@ -101,7 +102,7 @@ class CommandRelayConsumerE2ETest {
 
         consumerProcessingService = new ConsumerProcessingService(
                 consumerProperties,
-                new ConsumerTxHandler(new ConsumerJdbcRepository(jdbcTemplate)),
+                new ConsumerTxHandler(new ConsumerJdbcRepository(jdbcTemplate), new NoopProjectionCacheInvalidator()),
                 new NoopConsumerFailpointGuard(),
                 new NoopDlqPublisher(),
                 new NoopRetryPublisher()
@@ -273,6 +274,12 @@ class CommandRelayConsumerE2ETest {
     private static final class NoopRetryPublisher implements RetryPublisher {
         @Override
         public void publish(ProcessingInput input, Exception exception) {
+        }
+    }
+
+    private static final class NoopProjectionCacheInvalidator implements ProjectionCacheInvalidator {
+        @Override
+        public void invalidate(String accountId) {
         }
     }
 

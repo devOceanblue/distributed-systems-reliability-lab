@@ -72,6 +72,7 @@ public class ConsumerServiceProperties {
 
     public enum CacheInvalidationMode {
         DEL,
+        VERSIONED,
         NONE
     }
 

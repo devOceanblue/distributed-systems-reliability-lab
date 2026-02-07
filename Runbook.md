@@ -9,8 +9,10 @@
 
 ## 0-1) Phase 1 코어 파이프라인 검증
 ```bash
+./scripts/verify/B-0314.sh
 ./scripts/verify/phase1-runtime.sh
 ./scripts/verify/phase1.sh
+./gradlew :services:query-service:test :services:consumer-service:test
 ```
 
 ## 0-2) Phase 2 실험 하네스 검증
@@ -199,6 +201,7 @@ make down-aws
 ./gradlew :services:command-service:bootRun
 ./gradlew :services:outbox-relay:bootRun
 ./gradlew :services:consumer-service:bootRun
+./gradlew :services:query-service:bootRun
 ```
 
 
@@ -219,6 +222,12 @@ consumer 수동 처리 예시:
 curl -X POST 'http://localhost:8082/internal/consumer/process' \
   -H 'content-type: application/json' \
   -d '{"eventId":"evt-1","dedupKey":"tx-1","eventType":"AccountBalanceChanged","accountId":"A-1","amount":100}'
+```
+
+query 조회 예시:
+```bash
+curl -s 'http://localhost:8083/accounts/A-1/balance'
+curl -s 'http://localhost:8083/internal/query/metrics'
 ```
 
 ## 12) Command->Relay->Consumer E2E 테스트

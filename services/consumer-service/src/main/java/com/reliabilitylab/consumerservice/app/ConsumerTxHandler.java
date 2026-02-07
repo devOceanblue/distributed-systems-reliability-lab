@@ -2,15 +2,22 @@ package com.reliabilitylab.consumerservice.app;
 
 import com.reliabilitylab.consumerservice.config.ConsumerServiceProperties;
 import com.reliabilitylab.consumerservice.infra.ConsumerJdbcRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class ConsumerTxHandler {
-    private final ConsumerJdbcRepository consumerJdbcRepository;
+    private static final Logger log = LoggerFactory.getLogger(ConsumerTxHandler.class);
 
-    public ConsumerTxHandler(ConsumerJdbcRepository consumerJdbcRepository) {
+    private final ConsumerJdbcRepository consumerJdbcRepository;
+    private final ProjectionCacheInvalidator projectionCacheInvalidator;
+
+    public ConsumerTxHandler(ConsumerJdbcRepository consumerJdbcRepository,
+                             ProjectionCacheInvalidator projectionCacheInvalidator) {
         this.consumerJdbcRepository = consumerJdbcRepository;
+        this.projectionCacheInvalidator = projectionCacheInvalidator;
     }
 
     @Transactional
@@ -38,6 +45,11 @@ public class ConsumerTxHandler {
         }
 
         consumerJdbcRepository.applyProjectionDelta(input.accountId(), input.amount());
+        try {
+            projectionCacheInvalidator.invalidate(input.accountId());
+        } catch (RuntimeException ex) {
+            log.warn("cache invalidation failed accountId={} reason={}", input.accountId(), ex.getMessage());
+        }
         return ProcessOutcome.PROCESSED;
     }
 }

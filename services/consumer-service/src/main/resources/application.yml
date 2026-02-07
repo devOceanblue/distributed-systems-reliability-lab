@@ -8,6 +8,10 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:16379}
   kafka:
     consumer:
       bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19092}
@@ -27,6 +31,8 @@ management:
 app:
   kafka:
     enabled: ${APP_KAFKA_ENABLED:false}
+  redis:
+    enabled: ${APP_REDIS_ENABLED:false}
   consumer-group: ${CONSUMER_GROUP:consumer-service}
   idempotency-mode: ${IDEMPOTENCY_MODE:PROCESSED_TABLE}
   offset-commit-mode: ${OFFSET_COMMIT_MODE:AFTER_DB}

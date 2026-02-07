@@ -8,6 +8,7 @@ required_files=(
   services/command-service/build.gradle
   services/outbox-relay/build.gradle
   services/consumer-service/build.gradle
+  services/query-service/build.gradle
   services/e2e-tests/build.gradle
   services/command-service/src/main/java/com/reliabilitylab/commandservice/CommandServiceApplication.java
   services/command-service/src/main/java/com/reliabilitylab/commandservice/api/CommandController.java
@@ -20,15 +21,23 @@ required_files=(
   services/consumer-service/src/main/java/com/reliabilitylab/consumerservice/ConsumerServiceApplication.java
   services/consumer-service/src/main/java/com/reliabilitylab/consumerservice/app/ConsumerProcessingService.java
   services/consumer-service/src/main/java/com/reliabilitylab/consumerservice/infra/ConsumerJdbcRepository.java
+  services/query-service/src/main/java/com/reliabilitylab/queryservice/QueryServiceApplication.java
+  services/query-service/src/main/java/com/reliabilitylab/queryservice/api/QueryController.java
+  services/query-service/src/main/java/com/reliabilitylab/queryservice/app/QueryBalanceService.java
+  services/query-service/src/main/java/com/reliabilitylab/queryservice/infra/RedisBalanceCacheStore.java
   services/command-service/src/main/resources/application.yml
   services/outbox-relay/src/main/resources/application.yml
   services/consumer-service/src/main/resources/application.yml
+  services/query-service/src/main/resources/application.yml
   services/command-service/src/main/resources/db/migration/V1__core.sql
   services/outbox-relay/src/main/resources/db/migration/V1__core.sql
   services/consumer-service/src/main/resources/db/migration/V1__core.sql
+  services/query-service/src/main/resources/db/migration/V1__core.sql
   services/command-service/src/test/java/com/reliabilitylab/commandservice/app/CommandApplicationServiceTest.java
   services/outbox-relay/src/test/java/com/reliabilitylab/outboxrelay/app/OutboxRelayServiceTest.java
   services/consumer-service/src/test/java/com/reliabilitylab/consumerservice/app/ConsumerProcessingServiceTest.java
+  services/consumer-service/src/test/java/com/reliabilitylab/consumerservice/app/ConsumerTxHandlerTest.java
+  services/query-service/src/test/java/com/reliabilitylab/queryservice/app/QueryBalanceServiceTest.java
   services/e2e-tests/src/test/java/com/reliabilitylab/e2e/CommandRelayConsumerE2ETest.java
 )
 
@@ -58,6 +67,16 @@ rg -q "FAILPOINT_AFTER_KAFKA_SEND_BEFORE_MARK_SENT|FAILPOINT_BEFORE_KAFKA_SEND" 
 
 rg -q "FAILPOINT_AFTER_OFFSET_COMMIT_BEFORE_DB_COMMIT" services/consumer-service/src/main/java/com/reliabilitylab/consumerservice/app/ConsumerProcessingService.java || {
   echo "[FAIL] consumer offset failpoint missing"
+  exit 1
+}
+
+rg -q "STAMPEDE_PROTECTION" services/query-service/src/main/resources/application.yml || {
+  echo "[FAIL] query-service stampede toggle missing"
+  exit 1
+}
+
+rg -q "CACHE_INVALIDATION_MODE" services/consumer-service/src/main/resources/application.yml || {
+  echo "[FAIL] consumer cache invalidation toggle missing"
   exit 1
 }
 
