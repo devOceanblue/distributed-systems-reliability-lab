@@ -20,5 +20,7 @@ run_and_assert E-004 env
 run_and_assert E-005 env
 run_and_assert E-006 env
 run_and_assert E-007 env LAB_PROFILE=local
+run_and_assert E-008 env
+run_and_assert E-009 env
 
-echo "[OK] phase2 harness checks passed (E-001..E-007)"
+echo "[OK] phase2 harness checks passed (E-001..E-009)"

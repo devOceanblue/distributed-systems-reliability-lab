@@ -11,6 +11,7 @@ Usage:
   ./scripts/exp run E-001
   ./scripts/exp assert E-001
   ./scripts/exp cleanup E-001
+  ./scripts/exp broker <stop|start> <broker_id>
 USAGE
 }
 
@@ -60,6 +61,24 @@ cleanup_experiment() {
   echo "[OK] cleaned"
 }
 
+broker_control() {
+  local action="${1:-}"
+  local broker_id="${2:-1}"
+
+  case "$action" in
+    stop)
+      "$ROOT_DIR/scripts/chaos/broker-stop.sh" "$broker_id"
+      ;;
+    start)
+      "$ROOT_DIR/scripts/chaos/broker-start.sh" "$broker_id"
+      ;;
+    *)
+      echo "usage: ./scripts/exp broker <stop|start> <broker_id>" >&2
+      return 2
+      ;;
+  esac
+}
+
 main() {
   local cmd="${1:-}"
   local exp_id="${2:-}"
@@ -78,6 +97,9 @@ main() {
       ;;
     cleanup)
       cleanup_experiment
+      ;;
+    broker)
+      broker_control "${2:-}" "${3:-1}"
       ;;
     *)
       usage
