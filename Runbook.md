@@ -20,9 +20,11 @@
 ```bash
 ./scripts/verify/B-0325.sh
 ./scripts/verify/B-0326.sh
+./scripts/verify/B-0327.sh
 ./scripts/verify/phase2.sh
 ./gradlew :services:e2e-tests:test --tests com.reliabilitylab.e2e.RetryDlqReplayE2ETest
 ./gradlew :services:e2e-tests:test --tests com.reliabilitylab.e2e.SchemaDeployOrderE2ETest
+LAB_PROFILE=local ./scripts/exp run E-007 && ./scripts/exp assert E-007
 ```
 
 ## 0-3) Phase 3 관측/chaos 자산 검증

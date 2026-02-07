@@ -12,6 +12,8 @@ main_topic_file="$STATE_DIR/topic-main.tsv"
 retry_5s_file="$STATE_DIR/topic-retry-5s.tsv"
 retry_1m_file="$STATE_DIR/topic-retry-1m.tsv"
 dlq_file="$STATE_DIR/topic-dlq.tsv"
+tx_topic_file="$STATE_DIR/topic-tx.tsv"
+tx_open_file="$STATE_DIR/topic-tx-open.tsv"
 projection_file="$STATE_DIR/projection.tsv"
 processed_file="$STATE_DIR/processed.tsv"
 replay_audit_file="$STATE_DIR/replay_audit.tsv"
@@ -28,6 +30,8 @@ init_state() {
   : > "$retry_5s_file"
   : > "$retry_1m_file"
   : > "$dlq_file"
+  : > "$tx_topic_file"
+  : > "$tx_open_file"
   : > "$projection_file"
   : > "$processed_file"
   : > "$replay_audit_file"
@@ -352,6 +356,89 @@ replay_dlq() {
   done < "$dlq_file"
 }
 
+tx_remove_open() {
+  local tx_id="$1"
+  awk -F '\t' -v target="$tx_id" '$1 != target {print}' "$tx_open_file" > "$tx_open_file.tmp"
+  mv "$tx_open_file.tmp" "$tx_open_file"
+}
+
+tx_reset() {
+  : > "$tx_topic_file"
+  : > "$tx_open_file"
+}
+
+tx_begin() {
+  local tx_id="$1"
+  if grep -q "^${tx_id}$" "$tx_open_file" 2>/dev/null; then
+    echo "transaction already open: $tx_id" >&2
+    return 2
+  fi
+  printf '%s\n' "$tx_id" >> "$tx_open_file"
+}
+
+tx_send() {
+  local tx_id="$1"
+  local dedup_key="$2"
+  local account_id="$3"
+  local amount="$4"
+
+  if ! grep -q "^${tx_id}$" "$tx_open_file" 2>/dev/null; then
+    echo "transaction is not open: $tx_id" >&2
+    return 2
+  fi
+
+  local offset
+  offset=$(wc -l < "$tx_topic_file" | tr -d ' ')
+  printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$offset" "$tx_id" "OPEN" "$dedup_key" "$account_id" "$amount" >> "$tx_topic_file"
+}
+
+tx_close() {
+  local tx_id="$1"
+  local final_state="$2"
+
+  tx_remove_open "$tx_id"
+  awk -F '\t' -v target="$tx_id" -v next_state="$final_state" \
+    'BEGIN{OFS="\t"} $2 == target && $3 == "OPEN" {$3=next_state} {print}' "$tx_topic_file" > "$tx_topic_file.tmp"
+  mv "$tx_topic_file.tmp" "$tx_topic_file"
+}
+
+tx_commit() {
+  tx_close "$1" "COMMITTED"
+}
+
+tx_abort() {
+  tx_close "$1" "ABORTED"
+}
+
+tx_leo() {
+  wc -l < "$tx_topic_file" | tr -d ' '
+}
+
+tx_hw() {
+  # Single replica local simulation: HW ~= LEO.
+  tx_leo
+}
+
+tx_lso() {
+  local first_open
+  first_open=$(awk -F '\t' '$3 == "OPEN" {print $1; exit}' "$tx_topic_file")
+  if [[ -n "$first_open" ]]; then
+    echo "$first_open"
+    return 0
+  fi
+  tx_leo
+}
+
+tx_read_uncommitted_count() {
+  wc -l < "$tx_topic_file" | tr -d ' '
+}
+
+tx_read_committed_count() {
+  local lso
+  lso=$(tx_lso)
+  awk -F '\t' -v target_lso="$lso" '$1 < target_lso && $3 == "COMMITTED" {c++} END{print c+0}' "$tx_topic_file"
+}
+
 count_rows() {
   local target="$1"
   local offset
@@ -422,6 +509,16 @@ Usage:
   lab_sim.sh consume-once [consumer_group] [processed_table|none] [after_db|before_db] [fail_after_offset_before_db] [force_permanent_account] [cache_invalidation_mode]
   lab_sim.sh query <account_id> [ttl_seconds] [cache_mode]
   lab_sim.sh replay-dlq [account_filter|*] [dry_run]
+  lab_sim.sh tx-reset
+  lab_sim.sh tx-begin <tx_id>
+  lab_sim.sh tx-send <tx_id> <dedup_key> <account_id> <amount>
+  lab_sim.sh tx-commit <tx_id>
+  lab_sim.sh tx-abort <tx_id>
+  lab_sim.sh tx-leo
+  lab_sim.sh tx-hw
+  lab_sim.sh tx-lso
+  lab_sim.sh tx-read-uncommitted
+  lab_sim.sh tx-read-committed
   lab_sim.sh count <accounts|ledger|outbox|outbox_pending|main_topic|main_unconsumed|projection|processed|dlq|replay_audit|offset|cache_hit|cache_miss|db_read>
   lab_sim.sh inspect <domain_balance|projection_balance|outbox_statuses> [account_id]
 USAGE
@@ -453,6 +550,36 @@ main() {
       ;;
     replay-dlq)
       replay_dlq "${2:-*}" "${3:-false}"
+      ;;
+    tx-reset)
+      tx_reset
+      ;;
+    tx-begin)
+      tx_begin "$2"
+      ;;
+    tx-send)
+      tx_send "$2" "$3" "$4" "$5"
+      ;;
+    tx-commit)
+      tx_commit "$2"
+      ;;
+    tx-abort)
+      tx_abort "$2"
+      ;;
+    tx-leo)
+      tx_leo
+      ;;
+    tx-hw)
+      tx_hw
+      ;;
+    tx-lso)
+      tx_lso
+      ;;
+    tx-read-uncommitted)
+      tx_read_uncommitted_count
+      ;;
+    tx-read-committed)
+      tx_read_committed_count
       ;;
     count)
       count_rows "$2"
