@@ -9,12 +9,6 @@ docker compose logs -f kafka-ui schema-registry mysql redis
 docker compose down -v
 ```
 
-Kafka 토픽 생성
-
-```bash
-./infra/kafka/create-topics.sh
-```
-
 DB 접속/검증
 
 ```bash
