@@ -8,7 +8,7 @@
 ## Phase 0 — Repo/Infra Bootstrap
 - `B-0301` Repo scaffold + 기본 문서/폴더: `DONE`
 - `B-0302` docker-compose + infra 스크립트: `DONE`
-- `B-0303` Event envelope + Avro + event-core 스캐폴드: `IN_PROGRESS`
+- `B-0303` Event envelope + Avro + Schema Registry + event-core codec/client: `DONE`
 
 ## Phase 1 — Core Pipeline
 - `B-0310` ~ `B-0313`: `DONE`
@@ -32,7 +32,7 @@
 Acceptance를 실제 런타임/운영 검증 기준으로 맞추기 위해 아래 티켓을 재오픈했다.
 
 Priority 1 (core correctness)
-- `B-0303`, `B-0314`, `B-0315`
+- `B-0314`, `B-0315`
 
 Priority 2 (core experiments completeness)
 - `B-0325`, `B-0326`, `B-0327`, `B-0328`, `B-0329`

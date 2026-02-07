@@ -3,21 +3,23 @@ set -euo pipefail
 
 subject="${1:?subject required}"
 schema_file="${2:?schema file required}"
-state_dir="${LAB_STATE_DIR:-.lab/state}"
-mkdir -p "$state_dir"
+registry_url="${SCHEMA_REGISTRY_URL:-http://localhost:18091}"
 
-compat_mode="BACKWARD"
-if [[ -f "$state_dir/schema.compat" ]]; then
-  compat_mode=$(cat "$state_dir/schema.compat")
+[[ -f "$schema_file" ]] || { echo "schema file not found: $schema_file" >&2; exit 1; }
+
+escaped_schema=$(sed ':a;N;$!ba;s/\\/\\\\/g;s/"/\\"/g;s/\n/\\n/g' "$schema_file")
+payload="{\"schema\":\"$escaped_schema\"}"
+
+response=$(curl -fsS -X POST \
+  -H 'Content-Type: application/vnd.schemaregistry.v1+json' \
+  --data "$payload" \
+  "$registry_url/subjects/$subject/versions")
+
+schema_id=$(echo "$response" | sed -n 's/.*"id"[[:space:]]*:[[:space:]]*\([0-9][0-9]*\).*/\1/p')
+if [[ -z "$schema_id" ]]; then
+  echo "failed to parse schema id from response: $response" >&2
+  exit 1
 fi
 
-if [[ "$schema_file" == *"breaking"* && ( "$compat_mode" == "BACKWARD" || "$compat_mode" == "FULL" ) ]]; then
-  echo "[FAIL] incompatible schema for $subject under $compat_mode" >&2
-  exit 409
-fi
-
-dir="$state_dir/schema-registry/$subject"
-mkdir -p "$dir"
-version=$(( $(find "$dir" -type f | wc -l | tr -d ' ') + 1 ))
-cp "$schema_file" "$dir/v${version}.avsc"
-echo "[OK] registered $subject version=$version"
+echo "$response"
+echo "[OK] registered $subject id=$schema_id"

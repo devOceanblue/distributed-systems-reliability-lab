@@ -3,6 +3,11 @@
 ## Setup
 - failure variant simulates producer-first breaking change
 - success variant simulates consumer-first dual-read
+- Schema Registry 기준선:
+```bash
+SCHEMA_REGISTRY_URL=http://localhost:18091 ./infra/schema/set-compatibility.sh BACKWARD
+SCHEMA_REGISTRY_URL=http://localhost:18091 ./infra/schema/register-core-schemas.sh
+```
 
 ## Run
 ```bash

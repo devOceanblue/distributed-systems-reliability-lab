@@ -1,0 +1,14 @@
+{
+  "type": "record",
+  "name": "EventEnvelope",
+  "namespace": "com.reliabilitylab.contracts",
+  "fields": [
+    { "name": "event_id", "type": "string" },
+    { "name": "dedup_key", "type": "string" },
+    { "name": "event_type", "type": "string" },
+    { "name": "schema_version", "type": "int" },
+    { "name": "occurred_at", "type": "long" },
+    { "name": "trace_id", "type": ["null", "string"], "default": null },
+    { "name": "payload", "type": "string" }
+  ]
+}

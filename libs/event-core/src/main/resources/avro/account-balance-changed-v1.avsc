@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "AccountBalanceChanged",
+  "namespace": "com.reliabilitylab.contracts",
+  "fields": [
+    { "name": "account_id", "type": "string" },
+    { "name": "tx_id", "type": "string" },
+    { "name": "delta", "type": "long" },
+    { "name": "balance", "type": "long" },
+    { "name": "reason", "type": "string" }
+  ]
+}

@@ -3,6 +3,8 @@
 ## 0) Phase 0 빠른 검증
 ```bash
 ./scripts/verify/phase0.sh
+./scripts/verify/B-0303.sh
+./gradlew :libs:event-core:test
 ```
 
 ## 0-1) Phase 1 코어 파이프라인 검증
@@ -76,6 +78,13 @@ redis-cli -h 127.0.0.1 -p 16379 ping
 - `account.balance.retry.5s`
 - `account.balance.retry.1m`
 - `account.balance.dlq`
+
+Schema Registry 계약 등록:
+```bash
+SCHEMA_REGISTRY_URL=http://localhost:18091 ./infra/schema/set-compatibility.sh BACKWARD
+SCHEMA_REGISTRY_URL=http://localhost:18091 ./infra/schema/register-core-schemas.sh
+curl -s http://localhost:18091/subjects
+```
 
 ## 4) 실험 하네스 실행
 

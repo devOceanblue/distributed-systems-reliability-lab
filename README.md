@@ -6,7 +6,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 
 - `B-0301`: 기본 문서/폴더 스캐폴드 완료
 - `B-0302`: `docker-compose.local.yml`, `docker-compose.aws.override.yml`, `infra/*` 작성 완료
-- `B-0303`: Avro 계약 파일 + `libs/event-core` 스캐폴드 완료 + 검증 스크립트 추가
+- `B-0303`: Avro 계약 + Schema Registry 등록 스크립트 + `event-core` codec/client 테스트 완료
 - `B-0310`~`B-0315`: core schema/command/relay/consumer/query/replay 시뮬레이터 구현
 - `B-0311`~`B-0313` 런타임 치환 1차: Gradle 멀티모듈 + Spring Boot command-service/outbox-relay/consumer-service + e2e 테스트
 - `B-0320`~`B-0329`: `scripts/exp` 하네스 + E-001~E-009 run/assert/cleanup 구현
@@ -15,7 +15,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - `B-0350`~`B-0356`: AWS Terraform/IAM 정책/프로파일 문서/스모크/IAM 실험 구현(템플릿 중심)
 
 재오픈 상태:
-- 진행중(`tasks/doing`): `B-0303`
+- 진행중(`tasks/doing`): 없음
 - 대기(`tasks/backlog`): `B-0314`, `B-0315`, `B-0325`~`B-0329`, `B-0330`, `B-0331`, `B-0333`~`B-0346`, `B-0350`~`B-0356`
 
 주의:
@@ -49,6 +49,8 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 
 ```bash
 ./scripts/verify/phase0.sh
+./scripts/verify/B-0303.sh
+./gradlew :libs:event-core:test
 ./scripts/verify/phase1-runtime.sh
 ./scripts/verify/phase1.sh
 ./scripts/verify/phase2.sh
@@ -72,6 +74,13 @@ docker compose -f docker-compose.local.yml --profile obs up -d prometheus grafan
 ./scripts/exp run E-001
 ./scripts/exp assert E-001
 ./scripts/exp cleanup E-001
+```
+
+Schema Registry core contracts:
+
+```bash
+SCHEMA_REGISTRY_URL=http://localhost:18091 ./infra/schema/set-compatibility.sh BACKWARD
+SCHEMA_REGISTRY_URL=http://localhost:18091 ./infra/schema/register-core-schemas.sh
 ```
 
 Phase 1 runtime command-service:
