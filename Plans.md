@@ -49,6 +49,9 @@
 - `B-0355`: `DONE`
 - `B-0356`: `DONE`
 
+## Phase 6 — Coupon Concurrency Extension
+- `B-0357`: `TODO`
+
 ## Runtime-Complete Track (Reopened)
 Acceptance를 실제 런타임/운영 검증 기준으로 맞추기 위해 아래 티켓을 재오픈했다.
 
@@ -84,3 +87,4 @@ Priority 4 (aws production completeness)
 - `E-019` `B-0342`: deadlock contention
 - `E-022` `B-0345`: controlled backfill
 - `E-023` `B-0346`: partial outage degradation
+- `E-024` `B-0357`: coupon issuance concurrency (Redis vs MySQL)

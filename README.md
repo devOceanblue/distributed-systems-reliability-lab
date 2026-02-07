@@ -2,7 +2,7 @@
 Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재현 가능한 실험으로 검증하는 레포입니다.
 
 ## Current Status
-이 저장소는 스캐폴드/시뮬레이션 기반 구현과 런타임 완결 기준 재오픈 티켓 처리를 모두 완료했습니다.
+이 저장소는 스캐폴드/시뮬레이션 기반 구현과 런타임 완결 기준 재오픈 티켓 처리를 완료했고, 현재는 신규 확장 티켓을 진행 대기 중입니다.
 
 - `B-0301`: 기본 문서/폴더 스캐폴드 완료
 - `B-0302`: `docker-compose.local.yml`, `docker-compose.aws.override.yml`, `infra/*` 작성 완료
@@ -20,6 +20,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - `B-0331` 런타임 acceptance: lag/outbox/dlq/cache/db/urp 경보식과 대시보드 패널 검증
 - `B-0333`~`B-0346` 런타임 acceptance: E-010~E-023 핵심 실험을 정적 마커에서 동적 계산/상태 검증으로 치환
 - `B-0350`~`B-0356` 런타임 acceptance: AWS IaC/IAM/profile/observability/schema-registry 의사결정 자산과 검증 자동화 완료
+- `B-0357` 계획: Redis vs MySQL 선착순 쿠폰 동시성 발급 병목 비교 실험(E-024)
 - `B-0320`~`B-0329`: `scripts/exp` 하네스 + E-001~E-009 run/assert/cleanup 구현
 - `B-0330`~`B-0332`: Prometheus/Grafana/alerts + `scripts/chaos/*` 구현
 - `B-0333`~`B-0346`: E-010~E-023 고급 실험 문서/시나리오/assert 구현
@@ -27,7 +28,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 
 재오픈 상태:
 - 진행중(`tasks/doing`): 없음
-- 대기(`tasks/backlog`): `(없음)`
+- 대기(`tasks/backlog`): `B-0357`
 
 주의:
 - 일부 실험/티켓은 deterministic 시뮬레이션 acceptance를 포함한다. 실제 운영 배포 전에는 AWS 실환경 smoke/chaos를 추가 수행한다.
@@ -54,6 +55,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - Phase 3: `B-0330` ~ `B-0332`
 - Phase 4: `B-0333` ~ `B-0346`
 - Phase 5: `B-0350` ~ `B-0356`
+- Phase 6: `B-0357`
 
 ## Commands
 현재 즉시 실행 가능한 최소 명령:
