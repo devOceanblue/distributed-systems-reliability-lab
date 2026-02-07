@@ -2,7 +2,7 @@
 Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재현 가능한 실험으로 검증하는 레포입니다.
 
 ## Current Status
-이 저장소는 현재 Phase 5(AWS/IAM/운영 프로파일)까지 구현된 상태입니다.
+이 저장소는 스캐폴드/시뮬레이션 기반 구현을 완료했고, 현재는 런타임 완결 기준으로 일부 티켓을 재오픈한 상태입니다.
 
 - `B-0301`: 기본 문서/폴더 스캐폴드 완료
 - `B-0302`: `docker-compose.local.yml`, `docker-compose.aws.override.yml`, `infra/*` 작성 완료
@@ -12,10 +12,14 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - `B-0320`~`B-0329`: `scripts/exp` 하네스 + E-001~E-009 run/assert/cleanup 구현
 - `B-0330`~`B-0332`: Prometheus/Grafana/alerts + `scripts/chaos/*` 구현
 - `B-0333`~`B-0346`: E-010~E-023 고급 실험 문서/시나리오/assert 구현
-- `B-0350`~`B-0356`: AWS Terraform/IAM 정책/프로파일 문서/스모크/IAM 실험 구현
+- `B-0350`~`B-0356`: AWS Terraform/IAM 정책/프로파일 문서/스모크/IAM 실험 구현(템플릿 중심)
+
+재오픈 상태:
+- 진행중(`tasks/doing`): `B-0303`
+- 대기(`tasks/backlog`): `B-0314`, `B-0315`, `B-0325`~`B-0329`, `B-0330`, `B-0331`, `B-0333`~`B-0346`, `B-0350`~`B-0356`
 
 주의:
-- `B-0302`, `B-0303`의 런타임 acceptance(실제 송수신, registry 등록 성공, 헬스체크)는 환경에서 별도 실행 검증이 필요합니다.
+- 일부 실험/티켓은 deterministic 시뮬레이션으로 acceptance를 대체하고 있으므로, 운영 수준 acceptance를 위해 재오픈된 티켓을 우선순위대로 치환 중입니다.
 
 ## What This Repo Proves
 - Outbox 없이 쓰면 이벤트 유실이 난다.

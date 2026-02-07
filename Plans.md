@@ -8,22 +8,40 @@
 ## Phase 0 — Repo/Infra Bootstrap
 - `B-0301` Repo scaffold + 기본 문서/폴더: `DONE`
 - `B-0302` docker-compose + infra 스크립트: `DONE`
-- `B-0303` Event envelope + Avro + event-core 스캐폴드: `DONE`
+- `B-0303` Event envelope + Avro + event-core 스캐폴드: `IN_PROGRESS`
 
 ## Phase 1 — Core Pipeline
-- `B-0310` ~ `B-0315`: `DONE`
+- `B-0310` ~ `B-0313`: `DONE`
+- `B-0314` ~ `B-0315`: `TODO`
 
 ## Phase 2 — Harness + Core Experiments
-- `B-0320` ~ `B-0329`: `DONE`
+- `B-0320` ~ `B-0324`: `DONE`
+- `B-0325` ~ `B-0329`: `TODO`
 
 ## Phase 3 — Observability + Chaos
-- `B-0330` ~ `B-0332`: `DONE`
+- `B-0330` ~ `B-0331`: `TODO`
+- `B-0332`: `DONE`
 
 ## Phase 4 — Advanced Experiments
-- `B-0333` ~ `B-0346`: `DONE`
+- `B-0333` ~ `B-0346`: `TODO`
 
 ## Phase 5 — AWS/IAM/Runtime Profiles
-- `B-0350` ~ `B-0356`: `DONE`
+- `B-0350` ~ `B-0356`: `TODO`
+
+## Runtime-Complete Track (Reopened)
+Acceptance를 실제 런타임/운영 검증 기준으로 맞추기 위해 아래 티켓을 재오픈했다.
+
+Priority 1 (core correctness)
+- `B-0303`, `B-0314`, `B-0315`
+
+Priority 2 (core experiments completeness)
+- `B-0325`, `B-0326`, `B-0327`, `B-0328`, `B-0329`
+
+Priority 3 (observability/advanced runtime)
+- `B-0330`, `B-0331`, `B-0333`, `B-0334`, `B-0335`, `B-0336`, `B-0337`, `B-0338`, `B-0341`, `B-0342`, `B-0345`, `B-0346`
+
+Priority 4 (aws production completeness)
+- `B-0350`, `B-0351`, `B-0352`, `B-0353`, `B-0354`, `B-0355`, `B-0356`
 
 ## Experiment Map
 - `E-001` `B-0321`: baseline success
