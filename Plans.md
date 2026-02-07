@@ -7,8 +7,8 @@
 
 ## Phase 0 — Repo/Infra Bootstrap
 - `B-0301` Repo scaffold + 기본 문서/폴더: `DONE`
-- `B-0302` docker-compose + infra 스크립트: `IN_PROGRESS`
-- `B-0303` Event envelope + Avro + event-core 스캐폴드: `IN_PROGRESS`
+- `B-0302` docker-compose + infra 스크립트: `DONE`
+- `B-0303` Event envelope + Avro + event-core 스캐폴드: `DONE`
 
 ## Phase 1 — Core Pipeline
 - `B-0310` ~ `B-0315`: `TODO`

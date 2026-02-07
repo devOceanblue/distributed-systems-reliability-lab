@@ -5,8 +5,8 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 이 저장소는 현재 Phase 0 부트스트랩 단계입니다.
 
 - `B-0301`: 기본 문서/폴더 스캐폴드 완료
-- `B-0302`: `docker-compose.yml`, `infra/*` 산출물 작성 완료
-- `B-0303`: Avro 계약 파일 + `libs/event-core` 스캐폴드 완료
+- `B-0302`: `docker-compose.local.yml`, `docker-compose.aws.override.yml`, `infra/*` 작성 완료
+- `B-0303`: Avro 계약 파일 + `libs/event-core` 스캐폴드 완료 + 검증 스크립트 추가
 
 주의:
 - `B-0302`, `B-0303`의 런타임 acceptance(실제 송수신, registry 등록 성공, 헬스체크)는 환경에서 별도 실행 검증이 필요합니다.
@@ -38,15 +38,13 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 현재 즉시 실행 가능한 최소 명령:
 
 ```bash
-./mvnw test
-./mvnw spring-boot:run
 ./scripts/verify/phase0.sh
 ```
 
 인프라 검증(`B-0302`)용 명령:
 
 ```bash
-docker compose up -d
+docker compose -f docker-compose.local.yml up -d
 ./infra/kafka/create-topics.sh
 ```
 

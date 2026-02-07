@@ -7,18 +7,18 @@
 
 ## 1) Local Infra 기동
 ```bash
-docker compose up -d
-docker compose ps
+docker compose -f docker-compose.local.yml up -d
+docker compose -f docker-compose.local.yml ps
 ```
 
 중지:
 ```bash
-docker compose down
+docker compose -f docker-compose.local.yml down
 ```
 
 볼륨까지 삭제:
 ```bash
-docker compose down -v
+docker compose -f docker-compose.local.yml down -v
 ```
 
 ## 2) 기본 헬스 확인
@@ -76,5 +76,5 @@ redis-cli -h 127.0.0.1 -p 16379 ping
 
 예시:
 ```bash
-docker compose -p reliability-lab up -d
+docker compose -f docker-compose.local.yml -p reliability-lab up -d
 ```
