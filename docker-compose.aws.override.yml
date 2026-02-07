@@ -21,9 +21,12 @@ services:
     command: ["sh", "-c", "echo LAB_PROFILE=$LAB_PROFILE && sleep 3600"]
     environment:
       LAB_PROFILE: aws
+      SPRING_PROFILES_ACTIVE: aws
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-b-1.example.msk.amazonaws.com:9098}
       KAFKA_SECURITY_PROTOCOL: ${KAFKA_SECURITY_PROTOCOL:-SASL_SSL}
       KAFKA_SASL_MECHANISM: ${KAFKA_SASL_MECHANISM:-AWS_MSK_IAM}
+      KAFKA_SASL_JAAS_CONFIG: ${KAFKA_SASL_JAAS_CONFIG:-software.amazon.msk.auth.iam.IAMLoginModule required;}
+      KAFKA_SASL_CALLBACK_HANDLER: ${KAFKA_SASL_CALLBACK_HANDLER:-software.amazon.msk.auth.iam.IAMClientCallbackHandler}
       MYSQL_URL: ${MYSQL_URL:-jdbc:mysql://aurora-writer.example.rds.amazonaws.com:3306/lab}
       MYSQL_USER: ${MYSQL_USER:-lab_user}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change-me}

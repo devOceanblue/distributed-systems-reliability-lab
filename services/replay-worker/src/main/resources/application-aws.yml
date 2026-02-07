@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://aurora-writer.example.rds.amazonaws.com:3306/lab}
+    username: ${MYSQL_USER:lab}
+    password: ${MYSQL_PASSWORD:lab}
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:b-1.example.msk.amazonaws.com:9098,b-2.example.msk.amazonaws.com:9098,b-3.example.msk.amazonaws.com:9098}
+      group-id: ${REPLAY_CAPTURE_GROUP:replay-worker-capture}
+      auto-offset-reset: earliest
+    producer:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:b-1.example.msk.amazonaws.com:9098,b-2.example.msk.amazonaws.com:9098,b-3.example.msk.amazonaws.com:9098}
+    properties:
+      security.protocol: ${KAFKA_SECURITY_PROTOCOL:SASL_SSL}
+      sasl.mechanism: ${KAFKA_SASL_MECHANISM:AWS_MSK_IAM}
+      sasl.jaas.config: ${KAFKA_SASL_JAAS_CONFIG:software.amazon.msk.auth.iam.IAMLoginModule required;}
+      sasl.client.callback.handler.class: ${KAFKA_SASL_CALLBACK_HANDLER:software.amazon.msk.auth.iam.IAMClientCallbackHandler}
+
+app:
+  kafka:
+    enabled: true

@@ -55,6 +55,13 @@ LAB_PROFILE=local ./scripts/exp run E-007 && ./scripts/exp assert E-007
 
 ## 0-5) Phase 5 AWS/IAM 자산 검증
 ```bash
+./scripts/verify/B-0350.sh
+./scripts/verify/B-0351.sh
+./scripts/verify/B-0352.sh
+./scripts/verify/B-0353.sh
+./scripts/verify/B-0354.sh
+./scripts/verify/B-0355.sh
+./scripts/verify/B-0356.sh
 ./scripts/verify/phase5.sh
 ```
 

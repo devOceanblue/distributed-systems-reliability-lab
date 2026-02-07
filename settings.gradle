@@ -1,6 +1,7 @@
 rootProject.name = 'reliability-lab'
 
 include('libs:event-core')
+include('libs:kafka-client')
 include('services:command-service')
 include('services:outbox-relay')
 include('services:consumer-service')

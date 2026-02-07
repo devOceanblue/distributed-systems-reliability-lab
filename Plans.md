@@ -41,7 +41,13 @@
 - `B-0346`: `DONE`
 
 ## Phase 5 — AWS/IAM/Runtime Profiles
-- `B-0350` ~ `B-0356`: `TODO`
+- `B-0350`: `DONE`
+- `B-0351`: `DONE`
+- `B-0352`: `DONE`
+- `B-0353`: `DONE`
+- `B-0354`: `DONE`
+- `B-0355`: `DONE`
+- `B-0356`: `DONE`
 
 ## Runtime-Complete Track (Reopened)
 Acceptance를 실제 런타임/운영 검증 기준으로 맞추기 위해 아래 티켓을 재오픈했다.
@@ -56,7 +62,7 @@ Priority 3 (observability/advanced runtime)
 - `(완료)`
 
 Priority 4 (aws production completeness)
-- `B-0350`, `B-0351`, `B-0352`, `B-0353`, `B-0354`, `B-0355`, `B-0356`
+- `(완료)`
 
 ## Experiment Map
 - `E-001` `B-0321`: baseline success

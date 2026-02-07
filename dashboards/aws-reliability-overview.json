@@ -1,10 +1,47 @@
 {
-  "title": "AWS Reliability Overview",
+  "id": null,
+  "title": "AWS Reliability Lab Overview",
+  "timezone": "browser",
   "schemaVersion": 39,
   "version": 1,
   "panels": [
-    {"type": "timeseries", "title": "Consumer Lag", "targets": [{"expr": "consumer_lag_records"}]},
-    {"type": "timeseries", "title": "Outbox Oldest Age", "targets": [{"expr": "outbox_oldest_age_seconds"}]},
-    {"type": "timeseries", "title": "DLQ Rate", "targets": [{"expr": "rate(dlq_publish_total[1m])"}]}
-  ]
+    {
+      "type": "timeseries",
+      "title": "Consumer Lag",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "targets": [{"expr": "consumer_lag_records", "refId": "A"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "Outbox Oldest Age",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "targets": [{"expr": "outbox_oldest_age_seconds", "refId": "A"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "DLQ Publish Rate",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+      "targets": [{"expr": "rate(dlq_publish_total[1m])", "refId": "A"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "Aurora Connections",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+      "targets": [{"expr": "aurora_connections", "refId": "A"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "Redis Hit Ratio",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+      "targets": [{"expr": "redis_hit_ratio", "refId": "A"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "Under Replicated Partitions",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+      "targets": [{"expr": "kafka_server_replicamanager_underreplicatedpartitions", "refId": "A"}]
+    }
+  ],
+  "templating": {"list": []},
+  "annotations": {"list": []}
 }

@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+
+for ticket in B-0350 B-0351 B-0352 B-0353 B-0354 B-0355 B-0356; do
+  "$ROOT_DIR/scripts/verify/${ticket}.sh" >/dev/null
+done
+
 required_files=(
   Makefile
   infra/aws/terraform/main.tf
@@ -10,12 +16,16 @@ required_files=(
   infra/aws/iam/policies/producer-minimal.json
   infra/aws/iam/policies/consumer-minimal.json
   infra/aws/iam/policies/admin-minimal.json
+  infra/aws/iam/policies/producer-topic-restricted.json
+  infra/aws/observability/main.tf
+  dashboards/aws-reliability-overview.json
   docs/AWS_ENV.md
   docs/MSK_IAM_CLIENT.md
   docs/LOCAL_VS_AWS.md
   docs/MSK_IAM_POLICIES.md
   docs/OBSERVABILITY.md
   docs/SCHEMA_REGISTRY_DECISION.md
+  infra/aws/ecs/schema-registry/task-definition.json
   scripts/smoke/aws-kafka-produce.sh
   scripts/smoke/aws-kafka-consume.sh
 )

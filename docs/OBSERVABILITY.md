@@ -10,4 +10,19 @@ Core signals for AWS runs:
 Dashboard source:
 - `dashboards/aws-reliability-overview.json`
 
-Alarm policy should gate degraded mode switch and operator response.
+Terraform scaffolding:
+- `infra/aws/observability/main.tf`
+- `infra/aws/observability/variables.tf`
+
+Provisioning example:
+```bash
+cd infra/aws/observability
+terraform init
+terraform plan
+# terraform apply -var='enable_resource_creation=true'
+```
+
+Alarm policy should gate degraded mode switch and operator response:
+- outbox oldest age > 300s
+- consumer lag > 1000
+- dlq publish rate > 1/min

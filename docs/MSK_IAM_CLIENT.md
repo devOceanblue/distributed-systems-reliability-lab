@@ -5,6 +5,12 @@
 - `sasl.mechanism=AWS_MSK_IAM`
 - `sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;`
 - `sasl.client.callback.handler.class=software.amazon.msk.auth.iam.IAMClientCallbackHandler`
+- 공통 헬퍼: `libs/kafka-client` (`MskIamKafkaProperties.buildFromEnv`)
+
+Dependency:
+```gradle
+implementation 'software.amazon.msk:aws-msk-iam-auth:2.2.0'
+```
 
 ## Python
 - `security_protocol=SASL_SSL`

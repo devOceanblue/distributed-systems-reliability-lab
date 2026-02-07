@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://aurora-writer.example.rds.amazonaws.com:3306/lab}
+    username: ${MYSQL_USER:lab}
+    password: ${MYSQL_PASSWORD:lab}
+  data:
+    redis:
+      host: ${REDIS_HOST:redis-cluster.example.cache.amazonaws.com}
+      port: ${REDIS_PORT:6379}
+
+app:
+  redis:
+    enabled: true

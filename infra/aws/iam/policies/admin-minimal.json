@@ -11,6 +11,8 @@
         "kafka-cluster:AlterTopic",
         "kafka-cluster:DeleteTopic",
         "kafka-cluster:DescribeTopic",
+        "kafka-cluster:WriteData",
+        "kafka-cluster:ReadData",
         "kafka-cluster:DescribeGroup",
         "kafka-cluster:AlterGroup"
       ],

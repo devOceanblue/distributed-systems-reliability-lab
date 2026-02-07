@@ -9,6 +9,7 @@
         "kafka-cluster:DescribeCluster",
         "kafka-cluster:DescribeTopic",
         "kafka-cluster:ReadData",
+        "kafka-cluster:WriteData",
         "kafka-cluster:AlterGroup",
         "kafka-cluster:DescribeGroup"
       ],
