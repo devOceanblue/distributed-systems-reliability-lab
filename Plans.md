@@ -50,7 +50,7 @@
 - `B-0356`: `DONE`
 
 ## Phase 6 — Coupon Concurrency Extension
-- `B-0357`: `TODO`
+- `B-0357`: `DONE`
 
 ## Runtime-Complete Track (Reopened)
 Acceptance를 실제 런타임/운영 검증 기준으로 맞추기 위해 아래 티켓을 재오픈했다.

@@ -41,9 +41,11 @@ verify-phases:
 	./scripts/verify/B-0354.sh
 	./scripts/verify/B-0355.sh
 	./scripts/verify/B-0356.sh
+	./scripts/verify/B-0357.sh
 	./scripts/verify/phase1-runtime.sh
 	./scripts/verify/phase1.sh
 	./scripts/verify/phase2.sh
 	./scripts/verify/phase3.sh
 	./scripts/verify/phase4.sh
 	./scripts/verify/phase5.sh
+	./scripts/verify/phase6.sh

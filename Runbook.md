@@ -65,6 +65,14 @@ LAB_PROFILE=local ./scripts/exp run E-007 && ./scripts/exp assert E-007
 ./scripts/verify/phase5.sh
 ```
 
+## 0-6) Phase 6 쿠폰 동시성 검증
+```bash
+./scripts/verify/B-0357.sh
+./scripts/verify/phase6.sh
+./scripts/exp run E-024
+./scripts/exp assert E-024
+```
+
 ## 1) Local Infra 기동
 ```bash
 docker compose -f docker-compose.local.yml up -d
@@ -216,6 +224,12 @@ Partial outage degradation 비교:
 ```bash
 ./scripts/exp run E-023
 ./scripts/exp assert E-023
+```
+
+Coupon concurrency Redis vs MySQL 비교:
+```bash
+./scripts/exp run E-024
+./scripts/exp assert E-024
 ```
 
 ## 10) AWS 프로파일 스모크
