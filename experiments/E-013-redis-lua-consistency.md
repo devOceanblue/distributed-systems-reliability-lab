@@ -7,6 +7,6 @@
 ```
 
 ## Validation
-- Redis-first + DB rollback mismatch marker
-- DB-first + Redis failure stale marker
-- invalidation-based convergence marker
+- failure A: Redis-first + DB rollback에서 `failure_a_diff != 0`
+- failure B: DB-first + Redis timeout에서 `failure_b_diff != 0`
+- success: invalidation + cache-aside에서 `success_diff == 0`

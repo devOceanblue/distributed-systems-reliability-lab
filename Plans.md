@@ -29,7 +29,16 @@
 - `B-0332`: `DONE`
 
 ## Phase 4 — Advanced Experiments
-- `B-0333` ~ `B-0346`: `TODO`
+- `B-0333`: `DONE`
+- `B-0334`: `DONE`
+- `B-0335`: `DONE`
+- `B-0336`: `DONE`
+- `B-0337`: `DONE`
+- `B-0338`: `DONE`
+- `B-0341`: `DONE`
+- `B-0342`: `DONE`
+- `B-0345`: `DONE`
+- `B-0346`: `DONE`
 
 ## Phase 5 — AWS/IAM/Runtime Profiles
 - `B-0350` ~ `B-0356`: `TODO`
@@ -44,7 +53,7 @@ Priority 2 (core experiments completeness)
 - `(완료)`
 
 Priority 3 (observability/advanced runtime)
-- `B-0333`, `B-0334`, `B-0335`, `B-0336`, `B-0337`, `B-0338`, `B-0341`, `B-0342`, `B-0345`, `B-0346`
+- `(완료)`
 
 Priority 4 (aws production completeness)
 - `B-0350`, `B-0351`, `B-0352`, `B-0353`, `B-0354`, `B-0355`, `B-0356`

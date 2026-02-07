@@ -7,5 +7,6 @@
 ```
 
 ## Validation
-- CROSSSLOT failure marker exists
-- HashTag success marker exists
+- non-hashtag multi-key pair maps to different slots (`failure_crossslot=1`)
+- hashtag pair maps to same slot (`success_hashtag=1`)
+- `{hot}` 태그 남발 시 슬롯 집중도(`hot_shard_ratio_pct`)가 높게 관측됨

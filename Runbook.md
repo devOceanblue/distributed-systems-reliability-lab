@@ -40,6 +40,16 @@ LAB_PROFILE=local ./scripts/exp run E-007 && ./scripts/exp assert E-007
 
 ## 0-4) Phase 4 고급 실험 검증
 ```bash
+./scripts/verify/B-0333.sh
+./scripts/verify/B-0334.sh
+./scripts/verify/B-0335.sh
+./scripts/verify/B-0336.sh
+./scripts/verify/B-0337.sh
+./scripts/verify/B-0338.sh
+./scripts/verify/B-0341.sh
+./scripts/verify/B-0342.sh
+./scripts/verify/B-0345.sh
+./scripts/verify/B-0346.sh
 ./scripts/verify/phase4.sh
 ```
 

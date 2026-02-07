@@ -7,5 +7,5 @@
 ```
 
 ## Validation
-- failure p95/p99 > success p95/p99
-- failure DB QPS > success DB QPS
+- hot key profile(`failure_unique_keys=1`)에서 p95/p99가 분산 키 프로필보다 높다
+- hot key profile에서 DB QPS가 분산 키 프로필보다 높다

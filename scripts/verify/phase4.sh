@@ -4,6 +4,23 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 EXP="$ROOT_DIR/scripts/exp"
 
+ticket_verifies=(
+  B-0333
+  B-0334
+  B-0335
+  B-0336
+  B-0337
+  B-0338
+  B-0341
+  B-0342
+  B-0345
+  B-0346
+)
+
+for ticket in "${ticket_verifies[@]}"; do
+  "$ROOT_DIR/scripts/verify/${ticket}.sh" >/dev/null
+done
+
 required_files=(
   infra/k6/hotkey.js
   infra/k6/distributed.js
@@ -31,7 +48,7 @@ for file in "${required_files[@]}"; do
   [[ -f "$file" ]] || { echo "[FAIL] missing: $file"; exit 1; }
 done
 
-for exp in E-010 E-015 E-018 E-022 E-023; do
+for exp in E-010 E-011 E-012 E-013 E-014 E-015 E-018 E-019 E-022 E-023; do
   "$EXP" run "$exp" >/dev/null
   "$EXP" assert "$exp" >/dev/null
   "$EXP" cleanup "$exp" >/dev/null

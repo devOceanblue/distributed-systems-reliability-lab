@@ -7,5 +7,5 @@
 ```
 
 ## Validation
-- rebalance/lag/dedup-skip metrics are worse in failure profile
-- tuned profile shows improved metrics
+- failure profile(`max.poll.interval=3s`, `max.poll.records=500`)에서 rebalance/lag/dedup-skip가 악화
+- tuned profile(`max.poll.interval=60s`, `max.poll.records=50`)에서 동일 부하 대비 지표가 개선
