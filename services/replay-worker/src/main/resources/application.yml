@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: replay-worker
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://localhost:13306/lab}
+    username: ${MYSQL_USER:lab}
+    password: ${MYSQL_PASSWORD:lab}
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19092}
+      group-id: ${REPLAY_CAPTURE_GROUP:replay-worker-capture}
+      auto-offset-reset: earliest
+    producer:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19092}
+
+server:
+  port: ${SERVER_PORT:8084}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+app:
+  kafka:
+    enabled: ${APP_KAFKA_ENABLED:false}
+  replay:
+    batch-size: ${REPLAY_BATCH_SIZE:100}
+    rate-limit-per-second: ${REPLAY_RATE_LIMIT_PER_SECOND:10}
+    output: ${REPLAY_OUTPUT:MAIN}
+    operator: ${REPLAY_OPERATOR:system}
+  topic:
+    main: ${TOPIC_MAIN:account.balance.v1}
+    retry5s: ${TOPIC_RETRY_5S:account.balance.retry.5s}
+    retry1m: ${TOPIC_RETRY_1M:account.balance.retry.1m}
+    dlq: ${TOPIC_DLQ:account.balance.dlq}

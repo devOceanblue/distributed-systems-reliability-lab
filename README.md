@@ -10,6 +10,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - `B-0310`~`B-0315`: core schema/command/relay/consumer/query/replay 시뮬레이터 구현
 - `B-0311`~`B-0313` 런타임 치환 1차: Gradle 멀티모듈 + Spring Boot command-service/outbox-relay/consumer-service + e2e 테스트
 - `B-0314` 런타임 치환 2차: Spring Boot query-service + Redis cache-aside/stampede 방어 + consumer invalidation(DEL|VERSIONED|NONE)
+- `B-0315` 런타임 치환 3차: Spring Boot replay-worker + DLQ 캡처/필터/rate-limit/재발행 + replay_audit 기록
 - `B-0320`~`B-0329`: `scripts/exp` 하네스 + E-001~E-009 run/assert/cleanup 구현
 - `B-0330`~`B-0332`: Prometheus/Grafana/alerts + `scripts/chaos/*` 구현
 - `B-0333`~`B-0346`: E-010~E-023 고급 실험 문서/시나리오/assert 구현
@@ -17,7 +18,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 
 재오픈 상태:
 - 진행중(`tasks/doing`): 없음
-- 대기(`tasks/backlog`): `B-0315`, `B-0325`~`B-0329`, `B-0330`, `B-0331`, `B-0333`~`B-0346`, `B-0350`~`B-0356`
+- 대기(`tasks/backlog`): `B-0325`~`B-0329`, `B-0330`, `B-0331`, `B-0333`~`B-0346`, `B-0350`~`B-0356`
 
 주의:
 - 일부 실험/티켓은 deterministic 시뮬레이션으로 acceptance를 대체하고 있으므로, 운영 수준 acceptance를 위해 재오픈된 티켓을 우선순위대로 치환 중입니다.
@@ -52,6 +53,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 ./scripts/verify/phase0.sh
 ./scripts/verify/B-0303.sh
 ./scripts/verify/B-0314.sh
+./scripts/verify/B-0315.sh
 ./gradlew :libs:event-core:test
 ./scripts/verify/phase1-runtime.sh
 ./scripts/verify/phase1.sh
@@ -85,13 +87,14 @@ SCHEMA_REGISTRY_URL=http://localhost:18091 ./infra/schema/set-compatibility.sh B
 SCHEMA_REGISTRY_URL=http://localhost:18091 ./infra/schema/register-core-schemas.sh
 ```
 
-Phase 1 runtime command-service:
+Phase 1 runtime services:
 
 ```bash
 ./gradlew :services:command-service:bootRun
 ./gradlew :services:outbox-relay:bootRun
 ./gradlew :services:consumer-service:bootRun
 ./gradlew :services:query-service:bootRun
+./gradlew :services:replay-worker:bootRun
 ./gradlew :services:e2e-tests:test
 ```
 

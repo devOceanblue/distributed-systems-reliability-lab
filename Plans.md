@@ -13,7 +13,7 @@
 ## Phase 1 — Core Pipeline
 - `B-0310` ~ `B-0313`: `DONE`
 - `B-0314`: `DONE`
-- `B-0315`: `TODO`
+- `B-0315`: `DONE`
 
 ## Phase 2 — Harness + Core Experiments
 - `B-0320` ~ `B-0324`: `DONE`
@@ -33,7 +33,7 @@
 Acceptance를 실제 런타임/운영 검증 기준으로 맞추기 위해 아래 티켓을 재오픈했다.
 
 Priority 1 (core correctness)
-- `B-0315`
+- `(완료)`
 
 Priority 2 (core experiments completeness)
 - `B-0325`, `B-0326`, `B-0327`, `B-0328`, `B-0329`

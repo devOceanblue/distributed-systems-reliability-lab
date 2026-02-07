@@ -9,6 +9,7 @@ required_files=(
   services/outbox-relay/build.gradle
   services/consumer-service/build.gradle
   services/query-service/build.gradle
+  services/replay-worker/build.gradle
   services/e2e-tests/build.gradle
   services/command-service/src/main/java/com/reliabilitylab/commandservice/CommandServiceApplication.java
   services/command-service/src/main/java/com/reliabilitylab/commandservice/api/CommandController.java
@@ -25,19 +26,26 @@ required_files=(
   services/query-service/src/main/java/com/reliabilitylab/queryservice/api/QueryController.java
   services/query-service/src/main/java/com/reliabilitylab/queryservice/app/QueryBalanceService.java
   services/query-service/src/main/java/com/reliabilitylab/queryservice/infra/RedisBalanceCacheStore.java
+  services/replay-worker/src/main/java/com/reliabilitylab/replayworker/ReplayWorkerApplication.java
+  services/replay-worker/src/main/java/com/reliabilitylab/replayworker/api/ReplayController.java
+  services/replay-worker/src/main/java/com/reliabilitylab/replayworker/app/ReplayWorkerService.java
+  services/replay-worker/src/main/java/com/reliabilitylab/replayworker/infra/JdbcDlqEventStore.java
   services/command-service/src/main/resources/application.yml
   services/outbox-relay/src/main/resources/application.yml
   services/consumer-service/src/main/resources/application.yml
   services/query-service/src/main/resources/application.yml
+  services/replay-worker/src/main/resources/application.yml
   services/command-service/src/main/resources/db/migration/V1__core.sql
   services/outbox-relay/src/main/resources/db/migration/V1__core.sql
   services/consumer-service/src/main/resources/db/migration/V1__core.sql
   services/query-service/src/main/resources/db/migration/V1__core.sql
+  services/replay-worker/src/main/resources/db/migration/V3__dlq_event.sql
   services/command-service/src/test/java/com/reliabilitylab/commandservice/app/CommandApplicationServiceTest.java
   services/outbox-relay/src/test/java/com/reliabilitylab/outboxrelay/app/OutboxRelayServiceTest.java
   services/consumer-service/src/test/java/com/reliabilitylab/consumerservice/app/ConsumerProcessingServiceTest.java
   services/consumer-service/src/test/java/com/reliabilitylab/consumerservice/app/ConsumerTxHandlerTest.java
   services/query-service/src/test/java/com/reliabilitylab/queryservice/app/QueryBalanceServiceTest.java
+  services/replay-worker/src/test/java/com/reliabilitylab/replayworker/app/ReplayWorkerServiceTest.java
   services/e2e-tests/src/test/java/com/reliabilitylab/e2e/CommandRelayConsumerE2ETest.java
 )
 
@@ -77,6 +85,16 @@ rg -q "STAMPEDE_PROTECTION" services/query-service/src/main/resources/applicatio
 
 rg -q "CACHE_INVALIDATION_MODE" services/consumer-service/src/main/resources/application.yml || {
   echo "[FAIL] consumer cache invalidation toggle missing"
+  exit 1
+}
+
+rg -q "REPLAY_RATE_LIMIT_PER_SECOND" services/replay-worker/src/main/resources/application.yml || {
+  echo "[FAIL] replay-worker rate limit toggle missing"
+  exit 1
+}
+
+rg -q "missing dedup_key" services/replay-worker/src/main/java/com/reliabilitylab/replayworker/app/ReplayWorkerService.java || {
+  echo "[FAIL] replay-worker dedup safety missing"
   exit 1
 }
 
