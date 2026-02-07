@@ -20,6 +20,11 @@
 ./scripts/verify/phase3.sh
 ```
 
+## 0-4) Phase 4 고급 실험 검증
+```bash
+./scripts/verify/phase4.sh
+```
+
 ## 1) Local Infra 기동
 ```bash
 docker compose -f docker-compose.local.yml up -d
@@ -139,4 +144,29 @@ docker compose -f docker-compose.local.yml --profile obs up -d prometheus grafan
 ```bash
 ./scripts/chaos/kill-service.sh consumer-service.sh
 ./scripts/chaos/restart-service.sh services/consumer-service/bin/consumer-service.sh
+```
+
+## 9) 고급 실험 실행 예시
+Schema compatibility gate:
+```bash
+./scripts/exp run E-015
+./scripts/exp assert E-015
+```
+
+Deadlock 정책 비교:
+```bash
+./scripts/exp run E-019
+./scripts/exp assert E-019
+```
+
+Backfill 통제 비교:
+```bash
+./scripts/exp run E-022
+./scripts/exp assert E-022
+```
+
+Partial outage degradation 비교:
+```bash
+./scripts/exp run E-023
+./scripts/exp assert E-023
 ```

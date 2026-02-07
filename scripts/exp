@@ -25,6 +25,16 @@ E-006  schema/deploy order simulation
 E-007  LSO read_committed visibility simulation
 E-008  cache stampede simulation
 E-009  ISR/minISR/acks matrix simulation
+E-010  redis cluster slot and hashtag behavior
+E-011  hot key / hot shard degradation
+E-012  tx abort skip-like visibility
+E-013  redis lua consistency anti-pattern
+E-014  processed_event retention strategy
+E-015  schema registry compatibility gate
+E-018  consumer rebalance storm
+E-019  mysql deadlock classification and retry
+E-022  controlled backfill vs unsafe backfill
+E-023  partial outage degradation
 LIST
 }
 

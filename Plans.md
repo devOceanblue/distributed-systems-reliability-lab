@@ -20,7 +20,7 @@
 - `B-0330` ~ `B-0332`: `DONE`
 
 ## Phase 4 — Advanced Experiments
-- `B-0333` ~ `B-0346`: `TODO`
+- `B-0333` ~ `B-0346`: `DONE`
 
 ## Phase 5 — Placeholder Tickets
 아래 티켓은 현재 빈 파일 placeholder입니다.

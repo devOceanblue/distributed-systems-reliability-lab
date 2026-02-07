@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "name": "CompatEvent",
+  "namespace": "com.reliabilitylab.contracts.compat",
+  "fields": [
+    { "name": "account_id", "type": "string" },
+    { "name": "amount", "type": "int" },
+    { "name": "tags", "type": {"type": "array", "items": "string"} }
+  ]
+}
