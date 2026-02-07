@@ -188,6 +188,8 @@ make down-aws
 ## 11) Phase 1 Runtime 서비스 기동
 ```bash
 ./gradlew :services:command-service:bootRun
+./gradlew :services:outbox-relay:bootRun
+./gradlew :services:consumer-service:bootRun
 ```
 
 
@@ -196,4 +198,21 @@ make down-aws
 curl -X POST 'http://localhost:8080/accounts/A-1/deposit' \
   -H 'content-type: application/json' \
   -d '{"txId":"tx-runtime-1","amount":100,"traceId":"trace-runtime-1"}'
+```
+
+relay 1회 실행:
+```bash
+curl -X POST 'http://localhost:8081/internal/relay/run-once'
+```
+
+consumer 수동 처리 예시:
+```bash
+curl -X POST 'http://localhost:8082/internal/consumer/process' \
+  -H 'content-type: application/json' \
+  -d '{"eventId":"evt-1","dedupKey":"tx-1","eventType":"AccountBalanceChanged","accountId":"A-1","amount":100}'
+```
+
+## 12) Command->Relay->Consumer E2E 테스트
+```bash
+./gradlew :services:e2e-tests:test
 ```

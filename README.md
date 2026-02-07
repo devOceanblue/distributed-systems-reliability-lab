@@ -8,6 +8,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - `B-0302`: `docker-compose.local.yml`, `docker-compose.aws.override.yml`, `infra/*` 작성 완료
 - `B-0303`: Avro 계약 파일 + `libs/event-core` 스캐폴드 완료 + 검증 스크립트 추가
 - `B-0310`~`B-0315`: core schema/command/relay/consumer/query/replay 시뮬레이터 구현
+- `B-0311`~`B-0313` 런타임 치환 1차: Gradle 멀티모듈 + Spring Boot command-service/outbox-relay/consumer-service + e2e 테스트
 - `B-0320`~`B-0329`: `scripts/exp` 하네스 + E-001~E-009 run/assert/cleanup 구현
 - `B-0330`~`B-0332`: Prometheus/Grafana/alerts + `scripts/chaos/*` 구현
 - `B-0333`~`B-0346`: E-010~E-023 고급 실험 문서/시나리오/assert 구현
@@ -73,6 +74,9 @@ Phase 1 runtime command-service:
 
 ```bash
 ./gradlew :services:command-service:bootRun
+./gradlew :services:outbox-relay:bootRun
+./gradlew :services:consumer-service:bootRun
+./gradlew :services:e2e-tests:test
 ```
 
 ## References

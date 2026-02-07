@@ -2,3 +2,6 @@ rootProject.name = 'reliability-lab'
 
 include('libs:event-core')
 include('services:command-service')
+include('services:outbox-relay')
+include('services:consumer-service')
+include('services:e2e-tests')
