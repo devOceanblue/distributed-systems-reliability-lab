@@ -1,4 +1,5 @@
 version: "3.9"
+name: reliability-lab
 
 services:
   kafka-1:
