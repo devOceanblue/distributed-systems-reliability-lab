@@ -308,3 +308,35 @@ curl -X POST 'http://localhost:8084/internal/replay/run' \
 ```bash
 ./gradlew :services:e2e-tests:test
 ```
+
+
+## E-039 Distributed lock
+
+```bash
+./scripts/exp run E-039A
+./scripts/exp assert E-039A
+./scripts/exp run E-039B
+./scripts/exp assert E-039B
+```
+
+- E-039A 결과: `./.lab/state/e039a/report.md`
+- E-039B 결과: `./.lab/state/e039b/report.md`
+- 운영 표준: `docs/standards/distributed-lock-fencing.md`
+
+
+## E-044~E-050 ElastiCache advanced track
+
+```bash
+./scripts/exp run E-044 && ./scripts/exp assert E-044
+./scripts/exp run E-045 && ./scripts/exp assert E-045
+./scripts/exp run E-046 && ./scripts/exp assert E-046
+./scripts/exp run E-047 && ./scripts/exp assert E-047
+./scripts/exp run E-048 && ./scripts/exp assert E-048
+./scripts/exp run E-049 && ./scripts/exp assert E-049
+./scripts/exp run E-050 && ./scripts/exp assert E-050
+```
+
+E-049 CI gate:
+```bash
+./scripts/verify/E-049.sh
+```
