@@ -21,6 +21,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - `B-0333`~`B-0346` 런타임 acceptance: E-010~E-023 핵심 실험을 정적 마커에서 동적 계산/상태 검증으로 치환
 - `B-0350`~`B-0356` 런타임 acceptance: AWS IaC/IAM/profile/observability/schema-registry 의사결정 자산과 검증 자동화 완료
 - `B-0357` 런타임 acceptance: Redis vs MySQL 선착순 쿠폰 동시성 게이트 비교(E-024)
+- `B-0360` 확장: Frontend Ops Console + request-id idempotency 실험 경로(E-025)
 - `B-0320`~`B-0329`: `scripts/exp` 하네스 + E-001~E-009 run/assert/cleanup 구현
 - `B-0330`~`B-0332`: Prometheus/Grafana/alerts + `scripts/chaos/*` 구현
 - `B-0333`~`B-0346`: E-010~E-023 고급 실험 문서/시나리오/assert 구현
@@ -91,6 +92,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 ./scripts/verify/B-0355.sh
 ./scripts/verify/B-0356.sh
 ./scripts/verify/B-0357.sh
+./scripts/verify/B-0360.sh
 ./gradlew :libs:event-core:test
 ./scripts/verify/phase1-runtime.sh
 ./scripts/verify/phase1.sh
@@ -99,6 +101,13 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 ./scripts/verify/phase4.sh
 ./scripts/verify/phase5.sh
 ./scripts/verify/phase6.sh
+```
+
+Frontend Ops Console:
+```bash
+cd frontend
+npm run dev
+npm test
 ```
 
 인프라 검증(`B-0302`)용 명령:
@@ -115,6 +124,8 @@ docker compose -f docker-compose.local.yml --profile obs up -d prometheus grafan
 ./scripts/exp list
 ./scripts/exp run E-001
 ./scripts/exp assert E-001
+./scripts/exp run E-025
+./scripts/exp assert E-025
 ./scripts/exp cleanup E-001
 ```
 

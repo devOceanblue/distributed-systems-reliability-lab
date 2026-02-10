@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reliability Lab Frontend</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="background-glow"></div>
+  <header class="hero">
+    <p class="eyebrow">Distributed Systems Reliability Lab</p>
+    <h1>Frontend Ops Console</h1>
+    <p class="subtitle">
+      Request-ID를 `txId`와 `Idempotency-Key`로 함께 전달해 중복 요청을 결정론적으로 차단하는 실험 UI.
+    </p>
+    <p id="status-banner" class="status-banner" data-level="ok">Ready</p>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>API Routing</h2>
+      <div class="field-grid">
+        <label>
+          Command Base URL
+          <input id="command-base-url" type="text" value="/api/command" autocomplete="off">
+        </label>
+        <label>
+          Query Base URL
+          <input id="query-base-url" type="text" value="/api/query" autocomplete="off">
+        </label>
+      </div>
+      <button id="save-config" class="button secondary" type="button">Save Endpoints</button>
+    </section>
+
+    <section class="panel">
+      <h2>Idempotent Command</h2>
+      <div class="field-grid">
+        <label>
+          Command
+          <select id="command-type">
+            <option value="deposit">deposit</option>
+            <option value="withdraw">withdraw</option>
+          </select>
+        </label>
+        <label>
+          Account ID
+          <input id="account-id" type="text" value="A-1" autocomplete="off">
+        </label>
+        <label>
+          Amount
+          <input id="amount" type="number" min="1" step="1" value="100">
+        </label>
+        <label>
+          Request-ID Strategy
+          <select id="request-id-strategy">
+            <option value="STICKY">STICKY (retry-safe)</option>
+            <option value="ALWAYS_NEW">ALWAYS_NEW</option>
+            <option value="MANUAL">MANUAL</option>
+          </select>
+        </label>
+        <label>
+          Manual Request-ID
+          <input id="manual-request-id" type="text" placeholder="req-e001-a1-001" autocomplete="off">
+        </label>
+        <label>
+          Trace ID (optional)
+          <input id="trace-id" type="text" placeholder="trace-e001-a1" autocomplete="off">
+        </label>
+      </div>
+
+      <div class="checkbox-row">
+        <input id="auto-refresh-balance" type="checkbox" checked>
+        <label for="auto-refresh-balance">Command 후 balance 자동 조회</label>
+      </div>
+
+      <div class="button-row">
+        <button id="prepare-command" class="button secondary" type="button">Prepare</button>
+        <button id="send-command" class="button primary" type="button">Send Command</button>
+        <button id="retry-same-request-id" class="button secondary" type="button">Retry Same Request-ID</button>
+        <button id="inject-duplicate" class="button danger" type="button">Inject Duplicate x2</button>
+        <button id="new-intent" class="button ghost" type="button">Start New Intent</button>
+      </div>
+
+      <div class="prepared-box">
+        <h3>Prepared Command</h3>
+        <dl>
+          <dt>request-id</dt><dd id="prepared-request-id">-</dd>
+          <dt>trace-id</dt><dd id="prepared-trace-id">-</dd>
+          <dt>intent-key</dt><dd id="prepared-intent-key">-</dd>
+          <dt>strategy</dt><dd id="prepared-strategy">-</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Read Model Snapshot</h2>
+      <div class="button-row">
+        <button id="refresh-balance" class="button secondary" type="button">Refresh Balance</button>
+        <button id="refresh-metrics" class="button secondary" type="button">Refresh Query Metrics</button>
+      </div>
+      <div class="snapshot-grid">
+        <article>
+          <h3>Balance</h3>
+          <pre id="balance-snapshot"></pre>
+        </article>
+        <article>
+          <h3>Query Metrics</h3>
+          <pre id="metrics-snapshot"></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel wide">
+      <h2>Command Attempts</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Source</th>
+              <th>Command</th>
+              <th>Account</th>
+              <th>Amount</th>
+              <th>Request-ID</th>
+              <th>HTTP</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody id="operations-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel wide">
+      <h2>Execution Log</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Level</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody id="logs-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/app.mjs"></script>
+</body>
+</html>

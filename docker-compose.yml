@@ -5,8 +5,9 @@ services:
   kafka-1:
     image: confluentinc/cp-kafka:7.6.0
     ports:
-      - "19092:9092"
+      - "19192:9092"
     environment:
+      CLUSTER_ID: q1Sh-9_ISia_zwGINzRvyQ
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
@@ -25,8 +26,9 @@ services:
   kafka-2:
     image: confluentinc/cp-kafka:7.6.0
     ports:
-      - "29092:9092"
+      - "29192:9092"
     environment:
+      CLUSTER_ID: q1Sh-9_ISia_zwGINzRvyQ
       KAFKA_NODE_ID: 2
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
@@ -45,8 +47,9 @@ services:
   kafka-3:
     image: confluentinc/cp-kafka:7.6.0
     ports:
-      - "39092:9092"
+      - "39192:9092"
     environment:
+      CLUSTER_ID: q1Sh-9_ISia_zwGINzRvyQ
       KAFKA_NODE_ID: 3
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093

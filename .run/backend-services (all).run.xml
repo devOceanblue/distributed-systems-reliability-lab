@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="backend-services (all)" type="CompoundRunConfigurationType" factoryName="Compound">
+    <toRun name="command-service" type="SpringBootApplicationConfigurationType" />
+    <toRun name="outbox-relay" type="SpringBootApplicationConfigurationType" />
+    <toRun name="consumer-service" type="SpringBootApplicationConfigurationType" />
+    <toRun name="query-service" type="SpringBootApplicationConfigurationType" />
+    <toRun name="replay-worker" type="SpringBootApplicationConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>

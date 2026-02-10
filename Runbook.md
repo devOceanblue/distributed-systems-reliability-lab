@@ -73,6 +73,13 @@ LAB_PROFILE=local ./scripts/exp run E-007 && ./scripts/exp assert E-007
 ./scripts/exp assert E-024
 ```
 
+## 0-7) Frontend 멱등 실험 검증
+```bash
+./scripts/verify/B-0360.sh
+./scripts/exp run E-025
+./scripts/exp assert E-025
+```
+
 ## 1) Local Infra 기동
 ```bash
 docker compose -f docker-compose.local.yml up -d
@@ -232,6 +239,12 @@ Coupon concurrency Redis vs MySQL 비교:
 ./scripts/exp assert E-024
 ```
 
+Frontend request-id idempotency 비교:
+```bash
+./scripts/exp run E-025
+./scripts/exp assert E-025
+```
+
 ## 10) AWS 프로파일 스모크
 ```bash
 make up-aws
@@ -248,6 +261,15 @@ make down-aws
 ./gradlew :services:query-service:bootRun
 ./gradlew :services:replay-worker:bootRun
 ```
+
+Frontend ops console 기동:
+```bash
+cd frontend
+npm run dev
+```
+
+브라우저:
+- `http://localhost:8088`
 
 
 샘플 요청:

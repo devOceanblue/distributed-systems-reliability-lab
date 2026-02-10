@@ -10,11 +10,11 @@ spring:
     locations: classpath:db/migration
   kafka:
     consumer:
-      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19092}
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19192}
       group-id: ${REPLAY_CAPTURE_GROUP:replay-worker-capture}
       auto-offset-reset: earliest
     producer:
-      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19092}
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19192}
 
 server:
   port: ${SERVER_PORT:8084}

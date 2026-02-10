@@ -14,7 +14,7 @@ spring:
       port: ${REDIS_PORT:16379}
   kafka:
     consumer:
-      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19092}
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19192}
       group-id: ${CONSUMER_GROUP:consumer-service}
       auto-offset-reset: earliest
       enable-auto-commit: false

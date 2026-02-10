@@ -27,7 +27,7 @@
 ## Local Example
 ```bash
 export LAB_PROFILE=local
-export KAFKA_BOOTSTRAP_SERVERS=localhost:19092,localhost:29092,localhost:39092
+export KAFKA_BOOTSTRAP_SERVERS=localhost:19192,localhost:29192,localhost:39192
 export KAFKA_SECURITY_PROTOCOL=PLAINTEXT
 export MYSQL_URL=jdbc:mysql://localhost:13306/lab
 export MYSQL_USER=lab
