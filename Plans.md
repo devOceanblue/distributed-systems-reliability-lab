@@ -88,3 +88,13 @@ Priority 4 (aws production completeness)
 - `E-022` `B-0345`: controlled backfill
 - `E-023` `B-0346`: partial outage degradation
 - `E-024` `B-0357`: coupon issuance concurrency (Redis vs MySQL)
+
+- `E-039A` `B-0361`: distributed lock failure modes (TTL expiry / bad unlock / timeout retry / crash restart)
+- `E-039B` `B-0361`: fencing token + safe unlock guard validation
+- `E-044` `B-0362`: online resharding/rebalancing under load
+- `E-045` `B-0363`: multi-az test-failover drill
+- `E-046` `B-0364`: reconnect storm/backoff
+- `E-047` `B-0365`: slowlog/log-delivery p99 diagnosis
+- `E-048` `B-0366`: pubsub slow-consumer output-buffer pressure
+- `E-049` `B-0367`: restricted commands compatibility gate
+- `E-050` `B-0368`: serverless vs node-based semantics gap

@@ -22,6 +22,8 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - `B-0350`~`B-0356` 런타임 acceptance: AWS IaC/IAM/profile/observability/schema-registry 의사결정 자산과 검증 자동화 완료
 - `B-0357` 런타임 acceptance: Redis vs MySQL 선착순 쿠폰 동시성 게이트 비교(E-024)
 - `B-0360` 확장: Frontend Ops Console + request-id idempotency 실험 경로(E-025)
+- `B-0361` 확장: Distributed Lock 실패 재현(E-039A) + fencing/safe unlock 성공 패턴(E-039B)
+- `B-0362`~`B-0368` 확장: ElastiCache 운영 고급 실험(E-044~E-050)
 - `B-0320`~`B-0329`: `scripts/exp` 하네스 + E-001~E-009 run/assert/cleanup 구현
 - `B-0330`~`B-0332`: Prometheus/Grafana/alerts + `scripts/chaos/*` 구현
 - `B-0333`~`B-0346`: E-010~E-023 고급 실험 문서/시나리오/assert 구현
@@ -29,7 +31,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 
 재오픈 상태:
 - 진행중(`tasks/doing`): 없음
-- 대기(`tasks/backlog`): `(없음)`
+- 대기(`tasks/backlog`): `B-0361` (E-039a/b)
 
 주의:
 - 일부 실험/티켓은 deterministic 시뮬레이션 acceptance를 포함한다. 실제 운영 배포 전에는 AWS 실환경 smoke/chaos를 추가 수행한다.
@@ -152,3 +154,11 @@ Phase 1 runtime services:
 - 설계: `ARCHITECTURE.md`
 - 로드맵: `Plans.md`
 - 운영 절차: `Runbook.md`
+
+### Distributed lock failure/success
+```bash
+./scripts/exp run E-039A
+./scripts/exp assert E-039A
+./scripts/exp run E-039B
+./scripts/exp assert E-039B
+```
