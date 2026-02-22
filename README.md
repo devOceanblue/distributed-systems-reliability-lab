@@ -2,7 +2,7 @@
 Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재현 가능한 실험으로 검증하는 레포입니다.
 
 ## Current Status
-이 저장소는 스캐폴드/시뮬레이션 기반 구현과 런타임 완결 기준 재오픈 티켓 처리를 완료했고, 현재는 신규 확장 티켓을 진행 대기 중입니다.
+이 저장소는 Phase 0~7(스캐폴드 -> 런타임 치환 -> 고급 실험/AWS/IAM -> Frontend idempotency 확장)까지 구현/검증을 완료했고, 현재 active 티켓이 없습니다.
 
 - `B-0301`: 기본 문서/폴더 스캐폴드 완료
 - `B-0302`: `docker-compose.local.yml`, `docker-compose.aws.override.yml`, `infra/*` 작성 완료
@@ -21,13 +21,14 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - `B-0333`~`B-0346` 런타임 acceptance: E-010~E-023 핵심 실험을 정적 마커에서 동적 계산/상태 검증으로 치환
 - `B-0350`~`B-0356` 런타임 acceptance: AWS IaC/IAM/profile/observability/schema-registry 의사결정 자산과 검증 자동화 완료
 - `B-0357` 런타임 acceptance: Redis vs MySQL 선착순 쿠폰 동시성 게이트 비교(E-024)
-- `B-0360` 확장: Frontend Ops Console + request-id idempotency 실험 경로(E-025)
+- `B-0360` 런타임 acceptance/확장: Frontend Ops Console + request-id idempotency 실험 경로(E-025) + 프론트 테스트 자동 검증
 - `B-0361` 확장: Distributed Lock 실패 재현(E-039A) + fencing/safe unlock 성공 패턴(E-039B)
 - `B-0362`~`B-0368` 확장: ElastiCache 운영 고급 실험(E-044~E-050)
 - `B-0320`~`B-0329`: `scripts/exp` 하네스 + E-001~E-009 run/assert/cleanup 구현
 - `B-0330`~`B-0332`: Prometheus/Grafana/alerts + `scripts/chaos/*` 구현
 - `B-0333`~`B-0346`: E-010~E-023 고급 실험 문서/시나리오/assert 구현
 - `B-0350`~`B-0356`: AWS Terraform/IAM 정책/프로파일 문서/스모크/IAM 실험 구현(템플릿 중심)
+- `B-0353`~`B-0354`: IAM 최소권한 실패 케이스(E-IAM-001~003) run/assert 결정론 시나리오 구현
 
 재오픈 상태:
 - 진행중(`tasks/doing`): 없음
@@ -36,12 +37,15 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 주의:
 - 일부 실험/티켓은 deterministic 시뮬레이션 acceptance를 포함한다. 실제 운영 배포 전에는 AWS 실환경 smoke/chaos를 추가 수행한다.
 - 쿠폰 발급(E-024)은 Redis 게이트/DB 저장 분리를 전제로 한 병목 비교 시뮬레이션이다.
+- IAM 실험(E-IAM-001~003)은 정책 템플릿 기반의 실패 재현(권한 부족)을 deterministic하게 검증한다.
 
 ## What This Repo Proves
 - Outbox 없이 쓰면 이벤트 유실이 난다.
 - `processed_event` 없이 소비하면 중복 부작용이 난다.
 - 캐시는 정답 저장소가 아니며 invalidation/TTL/stampede 방어가 필요하다.
 - 스키마/배포 순서(Consumer-First)를 지키지 않으면 장애가 난다.
+- IAM 최소 권한이 불완전하면 consumer group join/offset commit/idempotent produce가 실패한다.
+- 프론트가 `request-id`를 재사용하지 않으면 동일 의도 재시도에서 중복 발행 위험이 커진다.
 
 ## Repo Layout
 - `tasks/backlog/`: 티켓 정의 (`B-xxxx.md`)
@@ -51,6 +55,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - `contracts/avro/`: 이벤트 계약
 - `infra/`: compose 및 인프라 보조 스크립트
 - `libs/event-core/`: 공통 이벤트/페일포인트 코드
+- `frontend/`: Ops Console + request-id idempotency 실험 UI
 
 ## Phase Roadmap
 - Phase 0: `B-0301` ~ `B-0303`
@@ -60,6 +65,7 @@ Kafka x MySQL x Redis 기반으로 분산 시스템 성공/실패 패턴을 재�
 - Phase 4: `B-0333` ~ `B-0346`
 - Phase 5: `B-0350` ~ `B-0356`
 - Phase 6: `B-0357`
+- Phase 7: `B-0360`
 
 ## Commands
 현재 즉시 실행 가능한 최소 명령:
@@ -128,6 +134,8 @@ docker compose -f docker-compose.local.yml --profile obs up -d prometheus grafan
 ./scripts/exp assert E-001
 ./scripts/exp run E-025
 ./scripts/exp assert E-025
+./scripts/exp run E-IAM-001
+./scripts/exp assert E-IAM-001
 ./scripts/exp cleanup E-001
 ```
 

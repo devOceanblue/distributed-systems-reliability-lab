@@ -5,6 +5,10 @@
 - `IN_PROGRESS`: 일부 구현 완료, acceptance 진행 중
 - `TODO`: 미착수
 
+현재 스냅샷:
+- `tasks/doing`: 없음
+- `tasks/backlog`: 없음
+
 ## Phase 0 — Repo/Infra Bootstrap
 - `B-0301` Repo scaffold + 기본 문서/폴더: `DONE`
 - `B-0302` docker-compose + infra 스크립트: `DONE`
@@ -52,8 +56,11 @@
 ## Phase 6 — Coupon Concurrency Extension
 - `B-0357`: `DONE`
 
-## Runtime-Complete Track (Reopened)
-Acceptance를 실제 런타임/운영 검증 기준으로 맞추기 위해 아래 티켓을 재오픈했다.
+## Phase 7 — Frontend Idempotency Path
+- `B-0360`: `DONE`
+
+## Runtime-Complete Track (Closed)
+Acceptance를 실제 런타임/운영 검증 기준으로 맞추기 위한 재오픈 트랙은 종료되었다.
 
 Priority 1 (core correctness)
 - `(완료)`
@@ -88,7 +95,6 @@ Priority 4 (aws production completeness)
 - `E-022` `B-0345`: controlled backfill
 - `E-023` `B-0346`: partial outage degradation
 - `E-024` `B-0357`: coupon issuance concurrency (Redis vs MySQL)
-
 - `E-039A` `B-0361`: distributed lock failure modes (TTL expiry / bad unlock / timeout retry / crash restart)
 - `E-039B` `B-0361`: fencing token + safe unlock guard validation
 - `E-044` `B-0362`: online resharding/rebalancing under load
@@ -98,3 +104,7 @@ Priority 4 (aws production completeness)
 - `E-048` `B-0366`: pubsub slow-consumer output-buffer pressure
 - `E-049` `B-0367`: restricted commands compatibility gate
 - `E-050` `B-0368`: serverless vs node-based semantics gap
+- `E-025` `B-0360`: frontend request-id idempotency
+- `E-IAM-001` `B-0353`: missing consumer group permission
+- `E-IAM-002` `B-0353`: unauthorized topic write denied
+- `E-IAM-003` `B-0354`: idempotent produce permission missing

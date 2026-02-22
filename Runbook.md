@@ -253,6 +253,16 @@ LAB_PROFILE=aws KAFKA_BOOTSTRAP_SERVERS='b-1.dev:9098,b-2.dev:9098,b-3.dev:9098'
 make down-aws
 ```
 
+## 10-1) IAM 실패 재현 실험
+```bash
+./scripts/exp run E-IAM-001
+./scripts/exp assert E-IAM-001
+./scripts/exp run E-IAM-002
+./scripts/exp assert E-IAM-002
+./scripts/exp run E-IAM-003
+./scripts/exp assert E-IAM-003
+```
+
 ## 11) Phase 1 Runtime 서비스 기동
 ```bash
 ./gradlew :services:command-service:bootRun
